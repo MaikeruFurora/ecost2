@@ -1,22 +1,26 @@
-<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-    <div class="container">
-      <a class="navbar-brand" href="#">eCosting</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarCollapse">
-        <ul class="navbar-nav me-auto mb-2 mb-md-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Product</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Costing</a>
-          </li>
-        </ul>
-        {{-- <form class="d-flex">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form> --}}
-      </div>
-    </div>
-</nav>
+<div class="navbar bg-neutral text-neutral-content">
+  <div class="flex-none lg:hidden">
+    <label for="my-drawer-3" aria-label="open sidebar" class="btn btn-square btn-ghost">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        class="inline-block h-6 w-6 stroke-current">
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M4 6h16M4 12h16M4 18h16"></path>
+      </svg>
+    </label>
+  </div>
+  <div class="mx-2 flex-1 px-2">Sales Costing</div>
+  <div class="hidden flex-none lg:block">
+    <ul class="menu menu-horizontal">
+      <!-- Navbar menu content here -->
+      <li><a>Product</a></li>
+      <li><a>Costing Computation</a></li>
+    </ul>
+  </div>
+</div>
+

@@ -1,5 +1,5 @@
-<footer class="footer mt-auto py-3 bg-light">
-    <div class="container">
-      <span class="text-muted">Place sticky footer content here.</span>
-    </div>
-  </footer>
+<footer class="footer footer-center bg-base-300 text-base-content p-4">
+  <aside>
+    <p>Copyright © {new Date().getFullYear()} - All right reserved by ACME Industries Ltd</p>
+  </aside>
+</footer>

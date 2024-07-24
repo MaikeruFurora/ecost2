@@ -38,7 +38,7 @@ class AuthService{
 
         if (Auth::guard('web')->attempt($credentials,$remember)) {
 
-            return redirect()->route('auth.costing');
+            return redirect()->route('auth.item.index');
 
         }else{
             
