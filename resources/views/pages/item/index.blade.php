@@ -3,6 +3,9 @@
 <div class="card bg-base-100 border shadow-md">
     
     <div class="card-body">
+        <div class="flex justify-start">
+            <a href="{{ route('auth.item.create') }}" class="btn btn-outline btn-sm">Create</a>
+        </div>
         <div class="overflow-x-auto">
             <table class="table">
               <!-- head -->

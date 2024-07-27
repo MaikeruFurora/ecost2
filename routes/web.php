@@ -33,5 +33,6 @@ Route::middleware(['auth:web','preventBackHistory','auth.user'])->name('auth.')-
      * auth.item.update
      * auth.item.desctory
      */
+    Route::get('item/listFromView',[ItemController::class,'product_list_from_view'])->name('item.listFromView');
     Route::resource('item',ItemController::class);
 });

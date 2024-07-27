@@ -1,4 +1,5 @@
-<div class="navbar bg-neutral text-neutral-content">
+<div class="navbar ">
+  {{-- bg-neutral text-neutral-content --}}
   <div class="flex-none lg:hidden">
     <label for="my-drawer-3" aria-label="open sidebar" class="btn btn-square btn-ghost">
       <svg
