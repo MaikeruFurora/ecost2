@@ -34,7 +34,7 @@ class LoginRequest extends FormRequest
 
         return [
             'username.required'=>'The email or username field is required.'
-        ];
+        ]; 
 
     }
 }

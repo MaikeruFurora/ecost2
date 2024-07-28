@@ -1,29 +1,32 @@
+import Button from '../component/Button';
+import Input from '../component/Input';
+import useLogin from './hooks/useLogin';
 const Login = () => {
+    const {
+        usernameRef,
+        passwordRef,
+        error,
+        handleSubmit
+    } = useLogin();
+
     return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
         <div className="card w-96 bg-base-100 shadow-xl">
             <div className="card-body">
-                <h2 className="card-title">Login</h2>
+                <h2 className="card-title">Login to your account</h2>
                 <form>
-                    <div className="form-control mb-4">
-                    <label className="label">
-                        <span className="label-text">Username</span>
-                    </label>
-                    <input type="text" placeholder="Username" className="input input-bordered" />
-                    </div>
-                    <div className="form-control mb-4">
-                    <label className="label">
-                        <span className="label-text">Password</span>
-                    </label>
-                    <input type="password" placeholder="password" className="input input-bordered" />
-                    </div>
+                    <Input ref={usernameRef} name="username"placeholder="Username" />
+                    <Input ref={passwordRef} name="password" type="password" placeholder="Username" />
                     <div className="form-control mt-6">
-                    <button className="btn btn-primary">Login</button>
+                    <Button
+                        onClick={handleSubmit}
+                        type="submit"
+                        variant="primary"
+                        size="md"
+                        > Login </Button>
                     </div>
                 </form>
             </div>
         </div>
-    </div>
     );
 }
 

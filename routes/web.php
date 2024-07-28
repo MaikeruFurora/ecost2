@@ -17,22 +17,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware(['guest:web', 'preventBackHistory'])->name('auth.')->group(function () {
-    Artisan::call('view:clear');
-    Route::get('/', function () {  return view('auth/login'); })->name('login');
-    Route::post('/post', [AuthController::class, 'loginPost'])->name('login.post');
-});
-
-Route::middleware(['auth:web','preventBackHistory','auth.user'])->name('auth.')->group(function(){
-    Artisan::call('view:clear');
-    /**
-     * auth.item.index
-     * auth.item.store
-     * auth.item.create
-     * auth.item.show
-     * auth.item.update
-     * auth.item.desctory
-     */
-    Route::get('item/listFromView',[ItemController::class,'product_list_from_view'])->name('item.listFromView');
-    Route::resource('item',ItemController::class);
+Route::get('/', function () { 
+    return view('welcome');
 });
