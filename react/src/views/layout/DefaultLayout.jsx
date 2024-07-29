@@ -3,7 +3,7 @@ import { useRef,useState } from 'react';
 import DehazeIcon from '@mui/icons-material/Dehaze';
 import { useStateContext } from '../context/contextProvider'
 import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
-
+import Loading from "../component/Loading";
 const DefaultLayout = () => {
     const {user, token, setToken, setUser} = useStateContext()
     if (!token) {
@@ -16,8 +16,9 @@ const DefaultLayout = () => {
     }
     return (
         <div>
+             
             <div className="drawer">
-            <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
+            {/* <input id="my-drawer-3" type="checkbox" className="drawer-toggle" /> */}
             <div className="drawer-content flex flex-col">
                 <div className="navbar bg-base-100 w-full shadow-lg">
                 <div className="flex-none lg:hidden">

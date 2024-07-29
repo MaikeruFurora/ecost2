@@ -13,7 +13,7 @@ const Input = forwardRef(({ type = 'text', name,value, onChange, placeholder, cl
       value={value}
       onChange={onChange}
       placeholder={placeholder}
-      className={`input input-bordered ${className}`}
+      className={`input input-bordered input-md ${className}`}
       ref={ref}  // Ensure ref is passed correctly
       {...rest}
     />

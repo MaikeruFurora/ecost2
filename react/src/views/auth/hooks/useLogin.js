@@ -23,11 +23,9 @@ const useLogin = () => {
     postData('/login', payload).
     then((res) => { 
      try {
-       setTimeout(() => {
         showMessage(res.status,res.message)
-          setUser(res.user)
-          setToken(res.token)
-      },2000)
+        setUser(res.user)
+        setToken(res.token)
      } catch (error) {
       console.log(error);
      }

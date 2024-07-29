@@ -1,4 +1,4 @@
-const PartialList = () => {
+const List = () => {
     return (
         <div className="card bg-base-100 shadow-md m-4">
         <div className="card-body p-4">
@@ -37,20 +37,10 @@ const PartialList = () => {
                     <td>Quality Control Specialist</td>
                     <td>Blue</td>
                     <td>
-                      <input
-                        type="text"
-                        value={1200 * i + 10}
-                        placeholder="Type here"
-                        className="input input-transparent w-full input-sm"
-                      />
+                    
                     </td>
                     <td>
-                      <input
-                        type="text"
-                        value={1200 * i + 10}
-                        placeholder="Type here"
-                        className="input input-transparent w-full input-sm"
-                      />
+                     
                     </td>
                   </tr>
                 ))}
@@ -63,6 +53,6 @@ const PartialList = () => {
     )
 }
 
-export default PartialList;
+export default List;
 
 

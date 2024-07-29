@@ -1,16 +1,23 @@
-import PartialList from "./partials/list";
-
+import ListProduct from "./partials/List";
+import Createproduct from "./partials/Create";
+import { useRef,useState } from 'react';
 const Product = () => {
+  const [value, setValue] = useState(false);
+
+  const handleChange = (event) => {
+    setValue(event.target.value);
+  };
+  
     return (
       <div role="tablist" className="tabs tabs-lifted ">
-        <input type="radio" name="my_tabs_2" role="tab" className="tab" checked="checked" aria-label="Product" />
+        <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Product" onChange={handleChange} defaultChecked={true} />
           <div role="tabpanel" className="tab-content bg-base-400 border-base-300 rounded-box p-3">
-              <PartialList/>
+            <ListProduct/>
           </div>
       
-        <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Create"  />
+        <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Create"  onChange={handleChange}/>
           <div role="tabpanel" className="tab-content bg-base-400 border-base-300 rounded-box p-3">
-            Tab content 2
+            <Createproduct/>
           </div>
       </div>
     )
