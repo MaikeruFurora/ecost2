@@ -1,7 +1,7 @@
 import React from 'react';
 import Input from './Input'; // Import the Input component if used within the table
 
-const Table = ({ columns, dataList, action, actionshow=false, subAction2Show }) => {
+const Table = ({ columns, dataList, action, actionshow, subAction2Show }) => {
   console.log(dataList); // This helps in debugging if data is being received
 
   return (
@@ -22,7 +22,8 @@ const Table = ({ columns, dataList, action, actionshow=false, subAction2Show }) 
                 <tr className='hover' role="checkbox" tabIndex={-1} key={row.id}>
                   {actionshow ? (
                     <td>
-                      {subAction2Show ? action(row) : null}
+                      {/* {subAction2Show ? action(row) : null} */}
+                      {action(row)}
                     </td>
                   ) : null}
                   {columns.map((column) => {
