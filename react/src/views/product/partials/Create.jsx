@@ -1,11 +1,10 @@
-import { useRef } from 'react'
+import { useRef,lazy} from 'react'
 import Input from '../../component/Input'
-import Button from '../../component/Button'
-import SearchIcon from '@mui/icons-material/Search';
 import Modal from '../../component/Modal'
-import SearchProductModal from './SearchProductModal';
+import SearchProductModal from './SearchProductModal'
 const Create = () => {
 
+    // const SearchProductModal = lazy(()=> import('./SearchProductModal'))
     const codeRef   = useRef()
     const nameRef   = useRef()
     const skuRef    = useRef()

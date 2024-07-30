@@ -1,9 +1,14 @@
-function App() {
+import { RouterProvider } from 'react-router-dom'
+import route from './router.jsx'
+import { Provider } from 'react-redux'
+import store from './redux/store/storeConfig.js';
+const App = () => {
 
   return (
-    <div className="App">
-      change
-    </div>
+    <>
+     
+        <RouterProvider router={route}/>
+    </>
   )
 }
 

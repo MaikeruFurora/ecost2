@@ -15,7 +15,8 @@ class ProductController extends Controller
 
         // Perform search on the 'vw_products' view
         $results = DB::table('vw_products')
-            ->where('itemname', 'LIKE', "%{$query}%") // Adjust 'itemname' to the column you want to search
+            ->where('itemname', 'LIKE', "%{$query}%")
+            ->where('itemname', 'LIKE', "%{$query}%")
             ->paginate(10, ['*'], 'page', $page);
         
         // Return the paginated results in JSON format

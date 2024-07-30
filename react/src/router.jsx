@@ -1,10 +1,12 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom'
-import Login from './views/auth/Login';
-import NotFound from './views/auth/NotFound';
-import Product from './views/product/Product';
-import DefaultLayout from './views/layout/DefaultLayout';
-import GuestLayout from './views/layout/GuestLayout';
-import Costing from './views/costing/CostingComputation';
+import { lazy } from 'react';
+
+const DefaultLayout = lazy(() => import('./views/layout/DefaultLayout'))
+const GuestLayout   = lazy(() => import('./views/layout/GuestLayout'))
+const Login         = lazy(() => import('./views/auth/Login'))
+const NotFound      = lazy(() => import('./views/auth/NotFound'))
+const Product       = lazy(() => import('./views/product/Product'))
+const Costing       = lazy(() => import('./views/costing/CostingComputation'))
 
 const route = createBrowserRouter([
     {

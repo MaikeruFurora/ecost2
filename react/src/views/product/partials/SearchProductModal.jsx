@@ -3,8 +3,10 @@ import Input from '../../component/Input';
 import Table from '../../component/Table';
 import Loading from '../../component/Loading';
 import { getData } from '../../services/ApiServices';
+import AddIcon from '@mui/icons-material/Add';
 import _ from 'lodash';
-
+import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 const SearchProductModal = () => {
     const [products, setProducts] = useState([]);
     const [pagination, setPagination] = useState({});
@@ -18,7 +20,6 @@ const SearchProductModal = () => {
         _.debounce(async (page = 1, query = '') => {
             setLoading(true);
             setError(null);
-
             try {
                 const response = await getData('/products/searchProductFromSAP', { page, query });
                 setProducts(response.data);
@@ -76,34 +77,28 @@ const SearchProductModal = () => {
                         placeholder="Search products..."
                     />
                 </div>
-                <div className="flex flex-wrap sm:flex-nowrap space-x-2">
-                    <div>
+                <div className=" flex flex-wrap sm:flex-nowrap space-x-2">
                         {pagination.prevPageUrl && (
                             <button
-                                className="btn btn-primary mx-1"
+                                className="btn btn-primary btn-link mx-1"
                                 onClick={() => handlePageChange(currentPage - 1)}
-                            >
-                                Previous
-                            </button>
+                            > <NavigateBeforeIcon/> Previous </button>
                         )}
                         {pagination.nextPageUrl && (
                             <button
-                                className="btn btn-primary mx-1"
+                                className="btn btn-primary btn-link mx-1"
                                 onClick={() => handlePageChange(currentPage + 1)}
-                            >
-                                Next
-                            </button>
+                            > Next <NavigateNextIcon/> </button>
                         )}
                     </div>
-                </div>
-            </div>
+                 </div>
             <Table
                 columns={columns}
                 dataList={products}
                 actionshow={true}
                 action={(row) => {
                     return (
-                        <button className='btn btn-primary btn-sm p-0' style={{fontSize:'10px'}} onClick={() => console.log(row)}>Test1</button>
+                        <button className='btn btn-default btn-sm m-0' style={{fontSize:'10px'}} onClick={() => console.log(row)}><AddIcon/></button>
                     )}
                 }
             />

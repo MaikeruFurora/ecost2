@@ -6,7 +6,7 @@ const Table = ({ columns, dataList, action, actionshow, subAction2Show }) => {
 
   return (
     <div className="overflow-x-auto">
-      <table className="table w-full">
+      <table className="table w-full table-sm">
         <thead className='border bg-gray-200'>
           <tr>
             {actionshow ? <th align={'left'}>Action</th> : ''}
