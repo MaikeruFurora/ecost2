@@ -1,5 +1,5 @@
-import ListProduct from "./partials/List";
-import Createproduct from "./partials/Create";
+import ListProduct from "./partials/components/List";
+import Createproduct from "./partials/components/Create";
 import { useRef,useState } from 'react';
 const Product = () => {
   const [value, setValue] = useState(false);

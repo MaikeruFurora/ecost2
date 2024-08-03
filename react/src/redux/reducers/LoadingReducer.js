@@ -1,18 +1,10 @@
 import Constants from "./Constants";
 const initialState = {
-  refresh: false,
-  search: "",
-  page: 0,
-  rowsPerPage: 10,
-  dataList: [],
-  dataListCount: 0,
-  filter: "",
-  selectedDataList: [],
-  selectedData: {},
+  loading: false,
 };
 const dataReducer = (state = initialState, action) => {
   switch (action.type) {
-    case Constants.ACTION_PRODUCT:
+    case Constants.ACTION_LOADING:
       return {
         ...state,
         ...action.payload,

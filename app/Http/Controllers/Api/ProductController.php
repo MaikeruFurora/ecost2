@@ -10,8 +10,8 @@ class ProductController extends Controller
 {
     public function searchProductFromSAP(Request $request){
         
-        $query = $request->get('query'); // Default to empty string if 'query' is not provided
-        $page = $request->get('page'); // Default to empty string if 'query' is not provided
+        $query = $request->get('q'); // Default to empty string if 'query' is not provided
+        $page = $request->get('p'); // Default to empty string if 'query' is not provided
 
         // Perform search on the 'vw_products' view
         $results = DB::table('vw_products')

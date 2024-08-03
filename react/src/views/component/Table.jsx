@@ -2,11 +2,10 @@ import React from 'react';
 import Input from './Input'; // Import the Input component if used within the table
 
 const Table = ({ columns, dataList, action, actionshow, subAction2Show }) => {
-  console.log(dataList); // This helps in debugging if data is being received
 
   return (
     <div className="overflow-x-auto">
-      <table className="table w-full table-sm">
+      <table className="table  table-sm">
         <thead className='border bg-gray-200'>
           <tr>
             {actionshow ? <th align={'left'}>Action</th> : ''}
