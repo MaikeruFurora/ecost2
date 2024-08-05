@@ -1,6 +1,5 @@
 import {getData} from '../../../services/ApiServices';
 import Constants from '../../../../redux/reducers/Constants';
-
 export const getProductFromSAP = (values) => async (dispatch) => {
     try {
        
@@ -14,7 +13,7 @@ export const getProductFromSAP = (values) => async (dispatch) => {
         await dispatch({
             type: Constants.ACTION_PRODUCT,
             payload: {
-                data: res.data,
+                dataList: res.dataList,
                 currentPage: res.current_page,
                 total: res.total,
                 perPage: res.per_page,
@@ -24,14 +23,15 @@ export const getProductFromSAP = (values) => async (dispatch) => {
                 prevPageUrl: res.prev_page_url
             },
         });
+    
+    } catch (error) {
+        throw error.response.data?.message
+    } finally{
         await dispatch({
             type: Constants.ACTION_LOADING,
             payload: {
               loading: false,
             },
         });
-    } catch (error) {
-        
-        console.log(error);
-    } 
+    }
 }

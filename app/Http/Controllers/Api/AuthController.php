@@ -9,6 +9,16 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
+
+    public function index(){
+
+        return response()->json([
+            'status'      => 'success',
+            'message'     => 'Successfully logged in.',
+            'credentials' => Auth::user(),
+        ]);
+
+    }
     public function login(LoginRequest $request){
 
         $credentials = $request->validated();

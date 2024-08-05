@@ -5,8 +5,8 @@ import React from 'react';
 const Modal = (props) => {
   const {...param} = props
   return (
-    <>
-      <Button className='btn-block' onClick={() => param.click()}><SearchIcon/>{param.buttonName}</Button>
+    <div className='relative'>
+      <Button className='btn' onClick={() => param.click()}><SearchIcon/>{param.buttonName}</Button>
       <dialog id='my_modal' className="modal">
         <div className="modal-box w-11/12 max-w-6xl">
           <div className='py-2 mb-3'>
@@ -19,7 +19,7 @@ const Modal = (props) => {
         </div>
       </dialog>
     
-    </>
+    </div>
     
   );
 };

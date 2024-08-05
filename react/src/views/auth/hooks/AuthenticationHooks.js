@@ -20,7 +20,7 @@ const useLogin = () => {
       username: usernameRef.current.value,
       password: passwordRef.current.value
     }
-    postData('/login', payload).
+    postData('/auth/login', payload).
     then((res) => { 
      try {
         showMessage(res.status,res.message)

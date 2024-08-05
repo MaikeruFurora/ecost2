@@ -39,7 +39,7 @@ class ProductController extends Controller
 
         return response()->json([
             'current_page'   => $results->currentPage(),
-            'data'           => $data,
+            'dataList'       => $data,
             'first_page_url' => $results->url(1),
             'from'           => $results->firstItem(),
             'last_page'      => $results->lastPage(),
@@ -49,6 +49,12 @@ class ProductController extends Controller
             'prev_page_url'  => $results->previousPageUrl(),
             'to'             => $results->lastItem(),
             'total'          => $results->total(),
+            'links'          => [
+                'first' => $results->url(1),
+                'last'  => $results->url($results->lastPage()),
+                'prev'  => $results->previousPageUrl(),
+                'next'  => $results->nextPageUrl(),
+            ],
         ]);
         
     }

@@ -35,6 +35,15 @@ export const getData = async (url, params = {}) => {
   }
 };
 
+export const getDataNoParam = async (url) => {
+  try {
+      const response = await axiosInstance.get(url);
+      return response.data;
+  } catch (error) {
+      throw error;
+  }
+};
+
 export const postData = async (url, data = {}) => {
   try {
       const response = await axiosInstance.post(url, data);

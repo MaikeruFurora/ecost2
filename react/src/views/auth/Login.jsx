@@ -1,11 +1,10 @@
 import Button from '../component/Button';
 import Input from '../component/Input';
-import useLogin from './hooks/useLogin';
+import useLogin from './hooks/AuthenticationHooks';
 const Login = () => {
     const {
         usernameRef,
         passwordRef,
-        error,
         handleSubmit
     } = useLogin();
 
@@ -14,8 +13,8 @@ const Login = () => {
             <div className="card-body">
                 <h2 className="card-title">Login to your account</h2>
                 <form>
-                    <Input ref={usernameRef} name="username"placeholder="Username" />
-                    <Input ref={passwordRef} name="password" type="password" placeholder="Username" />
+                    <Input ref={usernameRef} className="input-bordered" name="username"placeholder="Username" />
+                    <Input ref={passwordRef} className="input-bordered" name="password" type="password" placeholder="Username" />
                     <div className="form-control mt-6">
                     <Button
                         onClick={handleSubmit}

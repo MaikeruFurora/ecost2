@@ -16,6 +16,6 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
         // return $this->call(WarehouseSeeder::class);
         // return $this->call(TaxCodeSeeder::class);
-         $this->call(CompanySeeder::class);
+        //  $this->call(CompanySeeder::class);
     }
 }

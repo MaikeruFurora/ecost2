@@ -36,7 +36,8 @@ const DefaultLayout = () => {
                         <Link to="/costing">Costing</Link>
                     </li>
                     <li>
-                        <a href='#' className='text-red-500' onClick={logout} ><PowerSettingsNewIcon sx={{fontSize: 20}}/> Logout</a>  </li>
+                        <button className='text-red-500' onClick={logout()} ><PowerSettingsNewIcon sx={{fontSize: 20}}/> Logout</button>
+                    </li>
                 </ul>
                 </div>
                 </div>

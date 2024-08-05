@@ -10,13 +10,13 @@ const Product = () => {
   
     return (
       <div role="tablist" className="tabs tabs-lifted ">
-        <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Product" onChange={handleChange} defaultChecked={true} />
-          <div role="tabpanel" className="tab-content bg-base-400 border-base-300 rounded-box p-3">
+        <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Product" onChange={handleChange}  />
+          <div role="tabpanel" tabIndex="0" className="tab-content bg-base-400 border-base-300 rounded-box p-3">
             <ListProduct/>
           </div>
       
-        <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Create"  onChange={handleChange}/>
-          <div role="tabpanel" className="tab-content bg-base-400 border-base-300 rounded-box p-3">
+        <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Create"  onChange={handleChange} defaultChecked={true}/>
+          <div role="tabpanel" tabIndex="1"className="tab-content bg-base-400 border-base-300 rounded-box p-3">
             <Createproduct/>
           </div>
       </div>

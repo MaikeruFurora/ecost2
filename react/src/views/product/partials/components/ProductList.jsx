@@ -1,12 +1,11 @@
 import { connect, useDispatch, useSelector } from "react-redux";
-import React from 'react';
+import React,{useEffect} from 'react';
 import Table from '../../../component/Table';
 import AddIcon from '@mui/icons-material/Add';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import { Field, change, formValueSelector, reduxForm, reset } from "redux-form";
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import searchProductFromSAPHooks from '../hooks/SearchProductFromSAPHooks';
-import Loading from "../../../component/Loading";
 const formName = "ProductSAPForm";
 
 let ProductList = (props) => {
@@ -42,7 +41,7 @@ let ProductList = (props) => {
             </div>
             <Table
                 columns={reference.columns}
-                dataList={reference.data}
+                dataList={reference.dataList}
                 actionshow={true}
                 action={(row) => {
                     return (
@@ -58,8 +57,10 @@ const ReduxFormComponent = reduxForm({
     form: formName,
     onSubmit: '',
   })(ProductList);
-const selector = formValueSelector(formName);
-export default connect((state) => {
-    const refresh = state.ProductReducer.refresh;
-    return { refresh };
-}, {})(ReduxFormComponent);
+
+  export default ReduxFormComponent;
+// const selector = formValueSelector(formName);
+// export default connect((state) => {
+//     const refresh = state.ProductReducer.refresh;
+//     return { refresh };
+// }, {})(ReduxFormComponent);

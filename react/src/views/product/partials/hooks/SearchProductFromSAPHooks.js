@@ -3,20 +3,16 @@ import {
 } from '../actions/SearchProductFromSAPAction'
 import React from "react";
 import { useSearchParams } from 'react-router-dom'
-import { useCallback, useEffect, useState } from 'react';
 import Constants from '../../../../redux/reducers/Constants';
 import { useSelector,useDispatch } from 'react-redux';
 const searchProductFromSAPHooks = (props) => {
-    const dispatch = useDispatch();
+    
+    const dispatch      = useDispatch();
     const [searchParams, setSearchParams]   = useSearchParams();
     const page          = searchParams.get("p") != undefined ? searchParams.get("p") : 1;
     const search        = searchParams.get("q") != null ? String(searchParams.get("q")) : "";
-    const data          = useSelector((state)    => state.ProductReducer.data)
-    const [state, setState]         = useState({
-        selectedData:{},
-        
-        
-    })
+    const dataList      = useSelector((state)    => state.ProductReducer.dataList)
+    const refresh       = useSelector((state)    => state.ProductReducer.refresh)
     
     let getListParam = () => {
         const data = {
@@ -31,12 +27,12 @@ const searchProductFromSAPHooks = (props) => {
             let filter = getListParam()
            await dispatch(getProductFromSAP(filter));
         } catch (error) {
-            console.log(error);
+            // console.log(error);
         }
     };
 
     React.useEffect(() => {
-        getProductFromSAPList();
+            getProductFromSAPList();
     }, [page, search]);
     const onPageChange = (page) => {
         setCurrentPage(page);
@@ -80,10 +76,11 @@ const searchProductFromSAPHooks = (props) => {
 
 
     return {
-        data,
+        dataList,
         columns,
         page,
         search,
+        refresh,
         onPageChange,
         onSearchChange,
         onGetSelectedData,
