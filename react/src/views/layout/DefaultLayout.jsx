@@ -1,18 +1,13 @@
 import { Link, Navigate, Outlet } from 'react-router-dom'
-import { useRef,useState } from 'react';
 import DehazeIcon from '@mui/icons-material/Dehaze';
 import { useStateContext } from '../context/contextProvider'
 import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
-import Loading from "../component/Loading";
+import AuthenticateHooks from '../auth/hooks/AuthenticationHooks';
 const DefaultLayout = () => {
-    const {user, token, setToken, setUser} = useStateContext()
+    const { token } = useStateContext();
+    const { logoutSumbit } = AuthenticateHooks()
     if (!token) {
         return <Navigate to="/login"/>
-    }
-
-    const logout = () => {
-        setToken(null)
-        setUser(null)
     }
     return (
         <div>
@@ -36,7 +31,7 @@ const DefaultLayout = () => {
                         <Link to="/costing">Costing</Link>
                     </li>
                     <li>
-                        <button className='text-red-500' onClick={logout()} ><PowerSettingsNewIcon sx={{fontSize: 20}}/> Logout</button>
+                        <button className='text-red-500' onClick={logoutSumbit} ><PowerSettingsNewIcon sx={{fontSize: 20}}/> Logout</button>
                     </li>
                 </ul>
                 </div>

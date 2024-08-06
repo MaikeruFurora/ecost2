@@ -2,9 +2,6 @@ import React from 'react';
 import Input from './Input'; // Import the Input component if used within the table
 
 const Table = ({ columns, dataList, action, actionshow, subAction2Show }) => {
-  console.log(dataList.length > 0);
-  console.log(Number(dataList.length)<1);
-  
   return (
     <div className="overflow-x-auto">
       <table className="table  table-sm">

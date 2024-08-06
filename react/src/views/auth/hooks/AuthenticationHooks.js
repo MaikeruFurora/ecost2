@@ -1,50 +1,63 @@
-
-// hooks/useLogin.js
-
-import { useRef,useState } from 'react';
-import { postData } from '../../services/ApiServices';
-import  useSwal   from '../../services/useSwal'
+// hooks/useLoginForm.js
+import { useDispatch } from 'react-redux';
+import { getUser } from '../../auth/actions/AuthenticationAction';
+import Constants from '../../../redux/reducers/Constants';
+import useSwal from '../../services/useSwal';
 import { useStateContext } from '../../context/contextProvider';
 
-const useLogin = () => {
-  const usernameRef = useRef();
-  const passwordRef = useRef();
-  const [error, setError] = useState('');
-  const [message, setMessage] = useState('');
-  const { setToken,setUser } = useStateContext();
-  const { showMessage } = useSwal();
+const AuthenticateHooks = () => {
+    const dispatch = useDispatch();
+    const { setToken, setUser } = useStateContext();
+    const { showMessage } = useSwal();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const payload = {
-      username: usernameRef.current.value,
-      password: passwordRef.current.value
-    }
-    postData('/auth/login', payload).
-    then((res) => { 
-     try {
-        showMessage(res.status,res.message)
-        setUser(res.user)
-        setToken(res.token)
-     } catch (error) {
-      console.log(error);
-     }
-    }).catch((err) => {
-        const response = err.response;
-        if (response && response.status === 422) {
-          showMessage("error",response.data.message)
+    const submit = async (values) => {
+        console.log('Form values:', values);
+        try {
+            dispatch({
+                type: Constants.ACTION_LOADING,
+                payload: { loading: true },
+            });
+
+            const res = await dispatch(getUser(values));
+
+            dispatch({
+                type: Constants.ACTION_AUTHENTICATION,
+                payload: {
+                    user: res.user,
+                    token: res.token,
+                },
+            });
+
+            setToken(res.token);
+            setUser(res.user);
+        } catch (error) {
+            showMessage('error', error);
+        } finally {
+            dispatch({
+                type: Constants.ACTION_LOADING,
+                payload: { loading: false },
+            });
         }
-    })
-    
-  };
+    };
 
-  return {
-    usernameRef,
-    passwordRef,
-    error,
-    message,
-    handleSubmit
-  };
+    const logoutSumbit = () => {
+        // dispatch({
+        //     type: Constants.ACTION_AUTHENTICATION,
+        //     payload: {
+        //         user: {},
+        //         token: '',
+        //     },
+        // });
+
+
+        setToken(null);
+        setUser(null);
+    };
+
+    return {
+        submit,
+        logoutSumbit,
+     };
 };
 
-export default useLogin;
+export default AuthenticateHooks;

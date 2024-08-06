@@ -9,7 +9,7 @@ import searchProductFromSAPHooks from '../hooks/SearchProductFromSAPHooks';
 const formName = "ProductSAPForm";
 
 let ProductList = (props) => {
-    const { ...reference} = searchProductFromSAPHooks(props);
+    const { ...ref} = searchProductFromSAPHooks(props);
     return (
         <>
             <div className="flex flex-col sm:flex-row justify-between mb-4">
@@ -17,31 +17,31 @@ let ProductList = (props) => {
                     <input
                         className="input input-bordered w-full"
                         type="text"
-                        value={reference.search}
-                        onChange={reference.onSearchChange}
+                        value={ref.search}
+                        onChange={ref.onSearchChange}
                         placeholder="Search products..."
                     />
                 </div>
-                <div className=" flex flex-wrap sm:flex-nowrap space-x-2">
+                <div className="flex flex-wrap sm:flex-nowrap justify-end ">
                     <div className="join grid grid-cols-2">
-                        {reference.prevPageUrl && (
+                        {ref.prevPageUrl && (
                             <button
                                 className="btn btn-outline mx-1"
-                                onClick={() => reference.onPageChange(currentPage - 1)}
-                            > <NavigateBeforeIcon/> Previous </button>
+                                onClick={() => ref.onPageChange(ref.currentPage - 1)}
+                            > <NavigateBeforeIcon/> Prev </button>
                         )}
-                        {reference.nextPageUrl && (
+                        {ref.nextPageUrl && (
                             <button
                                 className="btn btn-outline mx-1"
-                                onClick={() => reference.onPageChange(currentPage + 1)}
+                                onClick={() => ref.onPageChange(ref.currentPage + 1)}
                             > Next <NavigateNextIcon/> </button>
                         )}
                     </div>
                 </div>
             </div>
             <Table
-                columns={reference.columns}
-                dataList={reference.dataList}
+                columns={ref.columns}
+                dataList={ref.dataList}
                 actionshow={true}
                 action={(row) => {
                     return (

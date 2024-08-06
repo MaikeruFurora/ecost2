@@ -5,13 +5,12 @@ import ProductList from './ProductList'
 import CreateProductHooks  from '../hooks/CreateProductHooks'
 
 const Create = () => {
-    const {warehouseList}=CreateProductHooks();
-    
-    return (
+    const {warehouseList,state,selectedProduct}=CreateProductHooks();
+   return (
         <div className='p-4'>
          <div className="flex justify-end">
                 <Modal buttonName="Search Product from SAP" size="max-w-12xl" title="Search Product" click={()=>{document.getElementById('my_modal').showModal()}}>
-                    <ProductList/>
+                    <ProductList selectedProduct={selectedProduct}/>
                 </Modal>
             </div>
             <table className="table mt-5 shadow-md">
@@ -25,9 +24,19 @@ const Create = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td className='text-center' colSpan={5}>PLEASE SELECT PRODUCT FROM SAP</td>
-                    </tr>
+                    {Object.keys(state.product).length !== 0 ? (
+                        <tr>
+                            <td>{state.product.code}</td>
+                            <td>{state.product.name}</td>
+                            <td>{state.product.brand}</td>
+                            <td>{state.product.sku}</td>
+                            <td>{state.product.branch}</td>
+                        </tr>
+                    ) : (
+                        <tr>
+                            <td className='text-center' colSpan={5}>PLEASE SELECT PRODUCT FROM SAP</td>
+                        </tr>
+                    )}
                 </tbody>
             </table>
             <div className="mt-4 grid grid-cols-2 lg:grid-cols-3 md:grid-cols-1 sm:grid-cols-2 gap-4">
@@ -37,9 +46,9 @@ const Create = () => {
                             <h6 className="text-sm font-semibold">Warehouses</h6>
                         </div>
                         <div className="p-4">
-                        <div className="grid grid-cols-2 gap-4">
+                            <div className="grid grid-cols-2 gap-4">
                                 {warehouseList.map((warehouse) => (
-                                <label key="{warehouse.id}"  className="flex items-center space-x-2 w-1/2">
+                                <label  key={warehouse.id}  className="flex items-center space-x-2 w-1/2">
                                     <input
                                     type="checkbox"
                                     name="warehouse_id"

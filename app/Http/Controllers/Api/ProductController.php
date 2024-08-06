@@ -23,8 +23,8 @@ class ProductController extends Controller
        $data = array_map(function ($item,$key) {
             return [
                 'id' => ++$key,
-                'itemcode' => $item->itemcode,
-                'itemname' => $item->itemname,
+                'code' => $item->itemcode,
+                'name' => $item->itemname,
                 'sku' => $item->sku,
                 'brand' => $item->brand,
                 'branch' => $item->branch,

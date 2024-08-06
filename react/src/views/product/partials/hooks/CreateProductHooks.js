@@ -11,13 +11,30 @@ const CreateProductHooks = (props) => {
 
     const dispatch       = useDispatch()
     const warehouseList  = useSelector((state) => state.WarehouseReducer.dataList) 
+    const [state, setState] = React.useState({
+        warehouseList: [],
+        taxCode: null,
+        volumePrice: 0,
+        pickupPrice: 0,
+        product:{}
+    });
+
+
     React.useEffect(() => {
         dispatch(getAllWarehouses())
         dispatch(getAllTaxCodes())
     }, [])
 
+    
+    const selectedProduct = (value) =>{
+        setState(prevState => ({ ...prevState, product: value }));
+        console.log(state);
+    }
+
     return {
-        warehouseList
+        state,
+        warehouseList,
+        selectedProduct
     }
 
 
