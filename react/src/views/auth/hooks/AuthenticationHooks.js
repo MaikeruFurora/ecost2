@@ -4,40 +4,51 @@ import { getUser } from '../../auth/actions/AuthenticationAction';
 import Constants from '../../../redux/reducers/Constants';
 import useSwal from '../../services/useSwal';
 import { useStateContext } from '../../context/contextProvider';
+import axiosClient from '../../../axios-client'
 
 const AuthenticateHooks = () => {
     const dispatch = useDispatch();
     const { setToken, setUser } = useStateContext();
     const { showMessage } = useSwal();
 
+
+ 
     const submit = async (values) => {
-        console.log('Form values:', values);
-        try {
-            dispatch({
-                type: Constants.ACTION_LOADING,
-                payload: { loading: true },
-            });
+        // try {
+        //     dispatch({
+        //         type: Constants.ACTION_LOADING,
+        //         payload: { loading: true },
+        //     });
 
-            const res = await dispatch(getUser(values));
+        //     const res = await dispatch(getUser(values));
 
-            dispatch({
-                type: Constants.ACTION_AUTHENTICATION,
-                payload: {
-                    user: res.user,
-                    token: res.token,
-                },
-            });
+        //     dispatch({
+        //         type: Constants.ACTION_AUTHENTICATION,
+        //         payload: {
+        //             user: res.user,
+        //             token: res.token,
+        //         },
+        //     });
 
-            setToken(res.token);
-            setUser(res.user);
-        } catch (error) {
-            showMessage('error', error);
-        } finally {
-            dispatch({
-                type: Constants.ACTION_LOADING,
-                payload: { loading: false },
-            });
-        }
+        //     setToken(res.token);
+        //     setUser(res.user);
+        // } catch (error) {
+        //     showMessage('error', error);
+        // } finally {
+        //     dispatch({
+        //         type: Constants.ACTION_LOADING,
+        //         payload: { loading: false },
+        //     });
+        // }
+
+        axiosClient.post('auth/login', values)
+        .then(({data}) => {
+          setUser(data.user)
+          setToken(data.token)
+        })
+        .catch(err => {
+          console.log(err)
+        })
     };
 
     const logoutSumbit = () => {

@@ -12,6 +12,7 @@ const searchProductFromSAPHooks = (props) => {
     const search = searchParams.get("q") || "";
 
     const dataList = useSelector((state) => state.ProductReducer.dataList);
+    const dataListCount = useSelector((state) => state.ProductReducer.dataListCount);
     const refresh = useSelector((state) => state.ProductReducer.refresh);
     const prevPageUrl = useSelector((state) => state.ProductReducer.prevPageUrl);
     const nextPageUrl = useSelector((state) => state.ProductReducer.nextPageUrl);
@@ -36,11 +37,13 @@ const searchProductFromSAPHooks = (props) => {
 
     const onPageChange = (page) => {
         setCurrentPage(page);
-        setSearchParams({ ...searchParams, p: page });
+        setSearchParams({ q: search, p: page });
     };
 
     const onSearchChange = (event) => {
         const search = event.target.value;
+        console.log(event);
+        
         setSearchParams({ q: search, p: "1" });
         setCurrentPage(1);
     };
@@ -61,6 +64,7 @@ const searchProductFromSAPHooks = (props) => {
         prevPageUrl,
         nextPageUrl,
         currentPage,
+        dataListCount,
         onPageChange,
         onSearchChange,
     };

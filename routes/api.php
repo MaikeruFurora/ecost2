@@ -1,5 +1,6 @@
 <?php
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\CompanyController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\TaxCodeController;
 use App\Http\Controllers\Api\WarehouseController;
@@ -16,20 +17,26 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 Route::post('auth/login', [AuthController::class, 'login']);
 Route::post('auth/logout', [AuthController::class, 'logout']);
+
+Route::middleware('auth:sanctum')->group(function () {
+    // Route::get('/user', function (Request $request) {
+    //     return $request->user();
+    // });
+    
+    Route::resource('/products', ProductController::class);
+    Route::get('/products/searchProductFromSAP', [ProductController::class, 'searchProductFromSAP']);
+    
+    Route::get('/warehouses/getAllWwarehouses', [WarehouseController::class,'getAllWwarehouses']);
+    Route::resource('/warehouses', WarehouseController::class);
+    
+    Route::get('/taxcodes/getAllTaxCodes', [TaxCodeController::class,'getAllTaxCodes']);
+    Route::resource('/taxcodes', TaxCodeController::class);
+    
+    Route::get('/companies/getAllCompanies', [CompanyController::class,'getAllTaxCompanies']);
+    Route::resource('/companies', CompanyController::class);
+});
+
+
 // Route::apiResource('auth', AuthController::class);
-
-Route::get('/products/searchProductFromSAP', [ProductController::class, 'searchProductFromSAP']);
-Route::apiResource('/products', ProductController::class);
-
-Route::get('/warehouses/getAllWwarehouses', [WarehouseController::class,'getAllWwarehouses']);
-Route::apiResource('/warehouses', WarehouseController::class);
-
-Route::get('/taxcodes/getAllTaxCodes', [TaxCodeController::class,'getAllTaxCodes']);
-Route::apiResource('/taxcodes', TaxCodeController::class);

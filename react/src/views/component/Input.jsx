@@ -12,7 +12,7 @@ const Input = ({ input, type, placeholder, className, label }) => {
         {...input} // Spread input props to handle value, onChange, etc.
         type={type ?? 'text'}
         placeholder={placeholder}
-        className={`input input-md ${className}`}
+        className={`input input-sm  ${className}`}
       />
     </div>
   );

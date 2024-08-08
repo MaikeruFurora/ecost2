@@ -1,14 +1,26 @@
 import React from 'react';
 
-const Select = ({ options, value, onChange, className }) => {
+const Select = ({ input,options, value, onChange, className, label, id }) => {
   return (
-    <select value={value} onChange={onChange} className={`select select-bordered ${className}`}>
-      {options.map((option, index) => (
-        <option key={index} value={option.value}>
-          {option.label}
-        </option>
-      ))}
-    </select>
+    <>
+      <label htmlFor={id} className="label">
+        <span className="label-text">
+          {label.charAt(0).toUpperCase() + label.slice(1).replace(/_/g, ' ')}
+        </span>
+      </label>
+      <select 
+        {...input}
+        id={id} 
+        value={value} 
+        onChange={onChange} 
+        className={`select select-bordered w-full ${className}`}
+      >
+        <option>  Please Select </option>
+        {options.map((option) => (
+          <option key={option.id} value={option.id}> {option.name} </option>
+        ))}
+      </select>
+    </>
   );
 };
 

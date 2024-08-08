@@ -1,5 +1,6 @@
 import {postData} from '../../services/ApiServices';
 import Constants from '../../../redux/reducers/Constants'
+
 export const getUser = (values) => async (dispatch) => {
     try {
      
@@ -8,6 +9,8 @@ export const getUser = (values) => async (dispatch) => {
         return res;
     
     } catch (error) {
+        console.log(error);
+        
         throw error.response.data?.message
     }
 }

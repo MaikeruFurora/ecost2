@@ -6,6 +6,7 @@ import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import { Field, change, formValueSelector, reduxForm, reset } from "redux-form";
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import searchProductFromSAPHooks from '../hooks/SearchProductFromSAPHooks';
+import Paginations from "../../../component/Pagination";
 const formName = "ProductSAPForm";
 
 let ProductList = (props) => {
@@ -23,20 +24,11 @@ let ProductList = (props) => {
                     />
                 </div>
                 <div className="flex flex-wrap sm:flex-nowrap justify-end ">
-                    <div className="join grid grid-cols-2">
-                        {ref.prevPageUrl && (
-                            <button
-                                className="btn btn-outline mx-1"
-                                onClick={() => ref.onPageChange(ref.currentPage - 1)}
-                            > <NavigateBeforeIcon/> Prev </button>
-                        )}
-                        {ref.nextPageUrl && (
-                            <button
-                                className="btn btn-outline mx-1"
-                                onClick={() => ref.onPageChange(ref.currentPage + 1)}
-                            > Next <NavigateNextIcon/> </button>
-                        )}
-                    </div>
+                <Paginations
+                        page={ref.currentPage}
+                        limit={ref.dataListCount}
+                        onHandleChange={ref.onPageChange}
+                    />
                 </div>
             </div>
             <Table
@@ -45,7 +37,10 @@ let ProductList = (props) => {
                 actionshow={true}
                 action={(row) => {
                     return (
-                        <button className='btn btn-default btn-sm m-0' style={{fontSize:'10px'}} onClick={() => reference.onGetSelectedData(row)}><AddIcon/></button>
+                        <button className='btn bg-gray-300 btn-sm m-0' 
+                                style={{fontSize:'8px'}} 
+                                onClick={() => props.selectedProduct(row)}><AddIcon style={{fontSize:'20px',padding:'2px'}}/>
+                        </button>
                     )}
                 }
             />

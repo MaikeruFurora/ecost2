@@ -4,9 +4,7 @@ import { connect } from 'react-redux';
 import Button from '../component/Button';
 import Input from '../component/Input';
 import AuthenticateHooks from '../auth/hooks/AuthenticationHooks';
-
 const form = 'LoginForm';
-
 const Login = (props) => {
     const { handleSubmit } = props;
     const { submit } = AuthenticateHooks();

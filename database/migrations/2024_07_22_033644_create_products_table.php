@@ -27,6 +27,7 @@ class CreateProductsTable extends Migration
             $table->string('sku');
             $table->double('pickup_price');
             $table->double('volume_price');
+            $table->double('retail_price');
             $table->string('created_by');
             $table->string('modified_by');
             $table->timestamp('deleted_at')->nullable();

@@ -14,6 +14,7 @@ export const getProductFromSAP = (values) => async (dispatch) => {
             type: Constants.ACTION_PRODUCT,
             payload: {
                 dataList: res.dataList,
+                dataListCount: res.total,
                 currentPage: res.current_page,
                 total: res.total,
                 perPage: res.per_page,

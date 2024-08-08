@@ -4,7 +4,7 @@ import Input from './Input'; // Import the Input component if used within the ta
 const Table = ({ columns, dataList, action, actionshow, subAction2Show }) => {
   return (
     <div className="overflow-x-auto">
-      <table className="table  table-sm">
+      <table className="table table-xs" style={{ fontSize: '10px' }}>
         <thead className='border bg-gray-200'>
           <tr>
             {actionshow ? <th align={'left'}>Action</th> : ''}

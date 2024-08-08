@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Warehouse;
+use Illuminate\Support\Facades\Auth;
 
 class WarehouseController extends Controller
 {
@@ -89,10 +90,12 @@ class WarehouseController extends Controller
     }
 
     public function getAllWwarehouses(){
+        return Auth::user();
+        return auth()->user()->id;
 
         return response()->json([
             'dataListCount'=> Warehouse::all()->count(),
-            'dataList'     => Warehouse::orderBy('group','asc')->orderBy('name','asc')->get(['id','name']),
+            'dataList'     => Warehouse::orderBy('group','asc')->orderBy('name','asc')->get(['id','name','group']),
             // 'dataList'     => [
             //     'manila'   => Warehouse::manilaGroup()->get(['id','name']),
             //     'province' => Warehouse::provinceGroup()->get(['id','name']),

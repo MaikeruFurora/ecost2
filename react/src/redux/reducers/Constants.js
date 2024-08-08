@@ -4,6 +4,7 @@ const Constants = {
     ACTION_WAREHOUSE      : "ACTION_WAREHOUSE",
     ACTION_TAXCODE        : "ACTION_TAXCODE",
     ACTION_AUTHENTICATION : "ACTION_AUTHENTICATION",
+    ACTION_COMPANY        : "ACTION_COMPANY",
 }
 
 export default Constants

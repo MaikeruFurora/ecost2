@@ -6,7 +6,14 @@ const MySwal = withReactContent(Swal);
 
 const useSwal = () => {
   const showAlert = (options) => {
-    return MySwal.fire(options);
+    const customOptions = {
+      ...options,
+      customClass: {
+        container: 'my-swal-container', // Add custom class
+        ...options.customClass // Merge with any custom class provided in options
+      }
+    };
+    return MySwal.fire(customOptions);
   };
 
   const showMessage = (type, text) => {

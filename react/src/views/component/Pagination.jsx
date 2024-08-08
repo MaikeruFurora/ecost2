@@ -1,29 +1,32 @@
-// import Pagination from "@mui/material/Pagination";
-// import Stack from "@mui/material/Stack";
-// import Typography from "@mui/material/Typography";
-// import React from "react";
-// import configuration from "../../apps/configure/configure.json";
-// const Pagination = (props) => {
-//   let itemsPerPage = 10;
-//   if (props.limitPerPage) {
-//     itemsPerPage = parseInt(props?.limitPerPage);
-//   }
-//   const handlePageChange = (event, page) => {
-//     if (props.onHandleChange) {
-//       props.onHandleChange(event, page);
-//     }
-//   };
-//   return (
-//     <Stack spacing={2}>
-//       {props.showPage ? <Typography>Page: {props.page}</Typography> : null}
-//       <Pagination
-//         color="secondary"
-//         onChange={handlePageChange}
-//         count={Math.ceil(parseInt(props.limit) / itemsPerPage)}
-//         page={parseInt(props.page)}
-//       />
-//     </Stack>
-//   );
-// };
+import React from "react";
+import Pagination from "@mui/material/Pagination";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
 
-// export default Pagination;
+const Paginations = ({ page, limit, onHandleChange, showPage = false, limitPerPage = 10 }) => {
+  const itemsPerPage = parseInt(limitPerPage, 10);
+
+  const handlePageChange = (event, newPage) => {
+      if (onHandleChange) {
+          onHandleChange(newPage); // Pass only the page number
+      }
+  };
+
+  return (
+      <Stack spacing={2}>
+          {showPage && <Typography>Page: {page}</Typography>}
+          <Pagination
+              color="secondary"
+              onChange={handlePageChange}
+              count={Math.ceil(parseInt(limit, 10) / itemsPerPage)}
+              page={parseInt(page, 10)}
+              shape="rounded"
+              variant="outlined" 
+              size="large"
+          />
+      </Stack>
+  );
+};
+
+
+export default Paginations;

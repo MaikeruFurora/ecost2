@@ -1,40 +1,87 @@
 import {
     getAllWarehouses,
-    getAllTaxCodes
+    getAllTaxCodes,
+    getAllCompanies,
+    storeProduct,
 } from '../actions/CreateProductAction'
-import React,{useRef} from "react";
+import React,{useState} from "react";
 import { useSearchParams } from 'react-router-dom'
 import Constants from '../../../../redux/reducers/Constants';
 import { useSelector,useDispatch } from 'react-redux';
+import usewal from '../../../services/useSwal';
+import { change,reset  } from 'redux-form';
 
-const CreateProductHooks = (props) => {
-
-    const dispatch       = useDispatch()
-    const warehouseList  = useSelector((state) => state.WarehouseReducer.dataList) 
+let CreateProductHooks = (props) => {
+    const dispatch        = useDispatch()
+    const warehouseList   = useSelector((state) => state.WarehouseReducer.dataList) 
+    const taxCodeList     = useSelector((state) => state.TaxCodeReducer.dataList) 
+    const companyList     = useSelector((state) => state.CompanyReducer.dataList) 
+    const { showMessage }     = usewal()
     const [state, setState] = React.useState({
-        warehouseList: [],
-        taxCode: null,
-        volumePrice: 0,
-        pickupPrice: 0,
+        filteredWarehouses: [],
+        warehouses: [],
         product:{}
     });
-
 
     React.useEffect(() => {
         dispatch(getAllWarehouses())
         dispatch(getAllTaxCodes())
+        dispatch(getAllCompanies())
+        props.initialize({
+            selected_warehouses: state.warehouses,
+            selected_product: state.product
+        })
     }, [])
-
+   
     
-    const selectedProduct = (value) =>{
-        setState(prevState => ({ ...prevState, product: value }));
-        console.log(state);
+    const selectedProduct = async (value) =>{
+        // showMessage('success',value)
+        await dispatch(change('CreateProductForm', 'selected_product', value));
+         setState(prevState => ({ ...prevState, 
+            product: value, 
+            filteredWarehouses: warehouseList.filter(item => item.group.toLowerCase() === value.branch.toLowerCase())
+        }));
     }
+
+    const selectedWarehouses = async (data) =>{
+        let warehouses = state.warehouses
+        await warehouses.push(data)
+        await dispatch(change('CreateProductForm', 'selected_warehouses', warehouses));
+        await setState((prev) => ({ ...prev, }));
+       
+    }
+
+    const removeProduct = () => {
+         dispatch(reset('CreateProductForm'));
+         setState({
+            filteredWarehouses: [],
+            warehouses: [],
+            product:{}
+        })
+    }
+
+    const submit = async (values) => {
+        try {
+            const res = await dispatch(storeProduct(values))
+            showMessage(res.status,res.message)
+            // removeProduct()
+        } catch (error) {
+            showMessage(error?.status,error?.message);
+            
+            // showMessage('error',error)
+        }
+    }
+    
 
     return {
         state,
+        taxCodeList,
         warehouseList,
-        selectedProduct
+        companyList,
+        selectedWarehouses,
+        selectedProduct,
+        removeProduct,
+        submit,
     }
 
 

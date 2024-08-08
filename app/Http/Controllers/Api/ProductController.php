@@ -3,11 +3,104 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
+
+    protected $product;
+    public function __construct() {
+        $this->product = new Product();
+        $this->middleware('auth:sanctum');
+    }
+
+      /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        return '  dasdsad     ';
+
+        $this->validate($request, [
+            'selected_product' => 'required',
+            'selected_warehouses' => 'required',
+            'pickup_price' => 'required|not_in:0',
+        ]);
+
+        $selectedWarehouse =  array_values(array_unique($request->selected_warehouses ?? []));
+        $selectedProduct   = $request->selected_product;
+        $prodcutData = [];
+        foreach ($selectedWarehouse as $key => $value) {
+            $prodcutData[] = [
+                'warehouse_id' => $value,
+                'text_code_id' => $request->tax_code,
+                'company_id'   => $request->company,
+                'pickup_price' => $request->pickup_price ?? 0,
+                'volume_price' => $request->volume_price ?? 0,
+                'code'         => $selectedProduct['code'],
+                'code'         => $selectedProduct['code'],
+                'sku'          => $selectedProduct['sku'],
+                'brand'        => $selectedProduct['brand'],
+                'created_by'   => auth()->user()->id,
+            ];
+        }
+
+        return $prodcutData;
+
+
+        $this->product->create($prodcutData);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
+    }
+
     public function searchProductFromSAP(Request $request){
         
         $query = $request->get('q'); // Default to empty string if 'query' is not provided
@@ -16,7 +109,8 @@ class ProductController extends Controller
         // Perform search on the 'vw_products' view
         $results = DB::table('vw_products')
             ->where('itemname', 'LIKE', "%{$query}%")
-            ->where('itemname', 'LIKE', "%{$query}%")
+            ->orwhere('itemname', 'LIKE', "%{$query}%")
+            ->orwhere('brand', 'LIKE', "%{$query}%")
             ->paginate(10, ['*'], 'page', $page);
         
         // Return the paginated results in JSON format
