@@ -8,7 +8,7 @@ import React,{useState} from "react";
 import { useSearchParams } from 'react-router-dom'
 import Constants from '../../../../redux/reducers/Constants';
 import { useSelector,useDispatch } from 'react-redux';
-import usewal from '../../../services/useSwal';
+import SweetAlert from '../../../services/SweetAlert';
 import { change,reset  } from 'redux-form';
 
 let CreateProductHooks = (props) => {
@@ -16,7 +16,7 @@ let CreateProductHooks = (props) => {
     const warehouseList   = useSelector((state) => state.WarehouseReducer.dataList) 
     const taxCodeList     = useSelector((state) => state.TaxCodeReducer.dataList) 
     const companyList     = useSelector((state) => state.CompanyReducer.dataList) 
-    const { showMessage }     = usewal()
+    const { showMessage }     = SweetAlert()
     const [state, setState] = React.useState({
         filteredWarehouses: [],
         warehouses: [],

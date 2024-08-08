@@ -1,57 +1,50 @@
 import axios from "axios";
+import { fetchCsrfToken } from './csrf';
 // import {useStateContext} from "./context/ContextProvider.jsx";
+const SERVER_URL = import.meta.env.VITE_API_BASE_URL
 
 const axiosInstance  = axios.create({
-  baseURL: `${import.meta.env.VITE_API_BASE_URL}/api`,
+  baseURL: SERVER_URL,
 })
 
-// axiosInstance.interceptors.request.use((config) => {
-//   const token = localStorage.getItem('ACCESS_TOKEN');
-//   config.headers.Authorization = `Bearer ${token}`
-//   config.headers['Content-Type'] = 'application/json'
-//   return config;
-// })
-
-axiosInstance.interceptors.request.use((config) => {
+axiosInstance.interceptors.request.use(async (config) => {
+  await fetchCsrfToken();
   const token = localStorage.getItem('ACCESS_TOKEN');
   config.headers.Authorization = `Bearer ${token}`
+  config.headers['Content-Type'] = 'application/json'
   return config;
 })
 
-// axiosInstance .interceptors.response.use((response) => {
-//     return response
-//   }, (error) => {
-//     const {response} = error;
-    
-//     if (response.status === 401) {
-//       localStorage.removeItem('ACCESS_TOKEN')
-//       // window.location.reload();
-//     } else if (response.status === 404) {
-//       //Show not found
-//     }
+axiosInstance.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    const { response } = error;
 
-//     throw error;
-// })
+    if (response) {
+      switch (response.status) {
+        case 401:
+          localStorage.removeItem('ACCESS_TOKEN');
+          // Redirect to login or show a login prompt
+          break;
+        case 404:
+          // Show a user-friendly message or redirect
+          break;
+        case 500:
+          // Handle server errors or show a generic error message
+          break;
+        default:
+          // Handle other status codes or show a generic error
+          break;
+      }
+    } else {
+      // Handle network errors or cases where the server is unreachable
+      console.error('Network error or server not reachable');
+    }
 
-
-axiosInstance.interceptors.response.use((response) => {
-  return response
-  
-}, (error) => {
-  try {
-    const {response} = error;
-    // 401 unauthorized
-    if (response.status === 401) {
-      localStorage.removeItem('ACCESS_TOKEN')
-      // window.location.reload();
-    } 
-    // else if (response.status === 404) {
-    //   //Show not found
-    // }
-  } catch (error) {
-    console.error(error);
+    return Promise.reject(error);
   }
-})
+);
+
 
 export const getData = async (url, params = {}) => {
   try {
@@ -97,4 +90,6 @@ export const delData = async (url) => {
       throw error;
   }
 };
+
+
 

@@ -90,9 +90,7 @@ class WarehouseController extends Controller
     }
 
     public function getAllWwarehouses(){
-        return Auth::user();
-        return auth()->user()->id;
-
+        
         return response()->json([
             'dataListCount'=> Warehouse::all()->count(),
             'dataList'     => Warehouse::orderBy('group','asc')->orderBy('name','asc')->get(['id','name','group']),

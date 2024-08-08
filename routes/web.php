@@ -17,6 +17,12 @@ use Illuminate\Support\Facades\Auth;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/sanctum/csrf-cookie', function () {
-    return response()->json(['message' => 'CSRF token set']);
+Route::get('/csrf-token', function () {
+    return response()->json([
+        'csrf_token' => csrf_token()
+    ],200);
 });
+
+Route::get('auth/forbidden', function () {
+    return view('welcome');
+})->name('not.authorized.page');

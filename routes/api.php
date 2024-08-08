@@ -19,14 +19,17 @@ use Illuminate\Support\Facades\Route;
 */
 Route::post('auth/login', [AuthController::class, 'login']);
 Route::post('auth/logout', [AuthController::class, 'logout']);
+Route::get('auth/csrf-token', function () {
+    return response()->json(['csrf_token' => csrf_token()]);
+});
 
 Route::middleware('auth:sanctum')->group(function () {
-    // Route::get('/user', function (Request $request) {
-    //     return $request->user();
-    // });
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
     
-    Route::resource('/products', ProductController::class);
     Route::get('/products/searchProductFromSAP', [ProductController::class, 'searchProductFromSAP']);
+    Route::resource('/products', ProductController::class);
     
     Route::get('/warehouses/getAllWwarehouses', [WarehouseController::class,'getAllWwarehouses']);
     Route::resource('/warehouses', WarehouseController::class);
@@ -37,6 +40,3 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/companies/getAllCompanies', [CompanyController::class,'getAllTaxCompanies']);
     Route::resource('/companies', CompanyController::class);
 });
-
-
-// Route::apiResource('auth', AuthController::class);

@@ -35,8 +35,6 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        return '  dasdsad     ';
-
         $this->validate($request, [
             'selected_product' => 'required',
             'selected_warehouses' => 'required',
@@ -75,7 +73,7 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        //
+        
     }
 
     /**
