@@ -66,7 +66,7 @@ const Warehouse = (props) => {
                     actionshow={true}
                     action={(row) => {
                       return (
-                        <IconButton size='small' variant="text" color="secondary" onClick={(e) => ref.handleEdit(row)}><AddCircleIcon  sx={{fontSize:20,padding:-1,margin:0}}/></IconButton>
+                        <IconButton size='small' variant="text" color="secondary" sx={{padding:.2,margin:0 }} onClick={(e) => ref.handleEdit(row)}><AddCircleIcon  sx={{fontSize:20}}/></IconButton>
                       )
                     }}
                   />

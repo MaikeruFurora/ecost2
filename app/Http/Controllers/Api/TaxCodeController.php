@@ -14,6 +14,13 @@ class TaxCodeController extends Controller
 
     use FormatsPaginatedResponse;
     
+    protected $taxCode;
+    protected $form;
+    public function __construct(){
+        $this->taxCode = new TaxCode();
+        $this->form = new Form();
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -24,7 +31,7 @@ class TaxCodeController extends Controller
         $query   = $request->get('q');
         $page    = $request->get('p');
 
-        $results = TaxCode::select('tax_codes.*','users.name as created_by_name')
+        $results = $this->taxCode->select('tax_codes.*','users.name as created_by_name')
                     ->join('users','tax_codes.created_by', '=', 'users.id')
                     ->where('tax_codes.name', 'like', '%'.$query.'%')
                     ->paginate(10, ['*'], 'page', $page);
@@ -40,9 +47,8 @@ class TaxCodeController extends Controller
      */
     public function store(TaxCodeRequest $request)
     {
-        $request['name'] = mb_strtoupper($request['name'], 'UTF-8');
         
-        $form = TaxCode::create($request->all());
+        $form = $this->taxCode->create($request->all());
 
         return response()->json([
             'status'  => $form ? 'success' : 'error',
@@ -68,9 +74,16 @@ class TaxCodeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(TaxCodeRequest $request, $id)
     {
-        //
+        $validatedData = $request->validated();
+
+        $this->taxCode->find($id)->update($validatedData);
+
+        return response()->json([
+            'status'  => 'success',
+            'message' => 'Successfully updated',
+        ]);
     }
 
     /**
@@ -91,20 +104,20 @@ class TaxCodeController extends Controller
         ]);
 
         $formId = $request->id;
-        $data   = Form::whereId($formId)->first(['name']);
+        $data   = $this->form->whereId($formId)->first(['name']);
 
         
         switch ($data->name) {
             case 'STATEMENT':
                     return response()->json([
-                        'dataListCount'=> TaxCode::formStatement()->get()->count(),
-                        'dataList'     => TaxCode::formStatement()->orderBy('name','asc')->get(['id','name']),
+                        'dataListCount'=> $this->taxCode->formStatement()->get()->count(),
+                        'dataList'     => $this->taxCode->formStatement()->orderBy('name','asc')->get(['id','name']),
                     ]);
                 break;
             case 'INVOICE':
                     return response()->json([
-                        'dataListCount'=> TaxCode::all()->count(),
-                        'dataList'     => TaxCode::orderBy('name','asc')->get(['id','name']),
+                        'dataListCount'=> $this->taxCode->all()->count(),
+                        'dataList'     => $this->taxCode->orderBy('name','asc')->get(['id','name']),
                     ]);
                 break;
             default:

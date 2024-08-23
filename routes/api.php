@@ -1,8 +1,9 @@
 <?php
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CompanyController;
-use App\Http\Controllers\Api\DestinationHeaderController;
+use App\Http\Controllers\Api\DestinationController;
 use App\Http\Controllers\Api\DestinationSubController;
+use App\Http\Controllers\Api\DestinationRateController;
 use App\Http\Controllers\Api\FormController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\ProductPriceLogController;
@@ -55,9 +56,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/truck/get-all-trucks', [TruckController::class, 'getAllTrucks']);
     Route::resource('/truck', TruckController::class);
     
-    Route::get('/destinationmain/trucking-matrix', [DestinationHeaderController::class, 'truckingMatrix']);
-    Route::get('/destinationmain/get-all', [DestinationHeaderController::class, 'getAllDestinationHeaders']);
-    Route::resource('/destinationmain', DestinationHeaderController::class);
+    Route::get('/destination/trucking-matrix', [DestinationController::class, 'truckingMatrix']);
+    Route::get('/destination/get-all', [DestinationController::class, 'getAllDestination']);
+    Route::resource('/destination', DestinationController::class);
+    
+    Route::resource('/destinationrate', DestinationRateController::class);
     
     Route::get('/destinationdetail/get-all-destination-headers', [DestinationSubController::class, 'getAllDestinationHeaders']);
     Route::resource('/destinationdetail', DestinationSubController::class);

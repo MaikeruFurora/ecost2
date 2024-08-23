@@ -1,8 +1,10 @@
 import { Box, Stack, Grid,Card,CardContent,List,ListItem,ListItemText,IconButton, Typography } from '@mui/material';
 import Input from '@component/Input'
 import Table from '@component/Table'
+import Modal from '@component/Modal'
 import Select from '@component/Select'
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import PlaylistAddCircleIcon from '@mui/icons-material/PlaylistAddCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import Button from '@component/Button'
 import SearchField from '@component/SearchField'
@@ -11,6 +13,7 @@ import * as React from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { reduxForm,Field } from 'redux-form'
 import DestinationHooks from './hooks/DestinationHooks';
+import DestinationRate from './components/DestinationRate';
 const form = 'DestinationForm'
 
 const Destination = (props) => {
@@ -19,9 +22,8 @@ const Destination = (props) => {
   return (
     <React.Fragment>
       <Typography variant="p" sx={{fontSize: '15px', fontWeight: 'bold'}}>Destination</Typography>
-      <Box sx={{ width: '100%', typography: 'body1' }} mt={2}>
-          <Grid container spacing={2}>
-            <Grid item xs={6} md={2}>
+      <Grid container spacing={2}>
+            <Grid item xs={12} md={12} lg={2}>
                 <form autoComplete='off' onSubmit={handleSubmit(ref.submit)}>
                 <Card variant="outlined">
                   <CardContent>
@@ -59,7 +61,7 @@ const Destination = (props) => {
                 </Card>
                 </form>
             </Grid>
-            <Grid item xs={6} md={10}>
+            <Grid item xs={12} md={12} lg={10}>
                 <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2} style={{padding:'0px 10px 10px 0px'}}>
                   <SearchField 
                         name="search" 
@@ -81,14 +83,25 @@ const Destination = (props) => {
                     actionshow={true}
                     action={(row) => {
                       return (
-                        <IconButton size='small' variant="text" color="secondary" onClick={(e) => ref.handleEdit(row)}><AddCircleIcon  sx={{fontSize:20,padding:0,margin:0}}/></IconButton>
+                        <>
+                        <IconButton size='small' variant="text" color="secondary" sx={{padding:.2,margin:0 }} onClick={(e) => ref.handleEdit(row)}><AddCircleIcon  sx={{fontSize:20,marginRight:1 }} tooltip="Edit"/></IconButton>
+                        <IconButton size='small' variant="text" color="secondary" sx={{padding:.2,margin:0 }} onClick={(e) => ref.handleModal(row)}><PlaylistAddCircleIcon  sx={{fontSize:20}} tooltip="Destianation Rate List"/></IconButton>
+                      </>  
                       )
                     }}
                   />
             </Grid>
           </Grid>
-        
-      </Box>
+
+          <Modal
+            size="lg"
+            variant="text"
+            open={ref.open}
+            onClose={ref.handleClose}
+            title="Destination Rate List"
+          >
+            <DestinationRate selectedDestination={ref.destionationDetails} />
+          </Modal>
     </React.Fragment>
   );
 }

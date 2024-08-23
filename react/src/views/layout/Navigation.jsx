@@ -21,11 +21,13 @@ import MapIcon from '@mui/icons-material/Map';
 import SummarizeIcon from '@mui/icons-material/Summarize';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import ContentPasteSearchIcon from '@mui/icons-material/ContentPasteSearch';
+import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
 import { Outlet,Link,Navigate  } from 'react-router-dom';
 import React from "react";
 import { styled, useTheme } from "@mui/material/styles";
 import Config from '@services/Config.json';
 import { useStateContext } from '@context/contextProvider'
+import AuthenticateHooks from '../pages/auth/hooks/AuthenticationHooks';
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -45,7 +47,7 @@ const closedMixin = (theme) => ({
   overflowX: 'hidden',
   width: `calc(${theme.spacing(7)} + 1px)`,
   [theme.breakpoints.up('sm')]: {
-    width: `calc(${theme.spacing(8)} + 1px)`,
+    width: `calc(${theme.spacing(7)} + 1px)`,
   },
 });
 
@@ -95,6 +97,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 
 const Navigation = () => {
+    const {logoutSumbit} = AuthenticateHooks()
     const {token} = useStateContext()
     if (!token) {
       return <Navigate to="/login"/>
@@ -114,6 +117,8 @@ const Navigation = () => {
     const handleDrawerClose = () => {
       setOpen(false);
     };
+
+
     return (
         <Box sx={{ display: 'flex' }}>
           <CssBaseline />
@@ -125,7 +130,7 @@ const Navigation = () => {
                 onClick={handleDrawerOpen}
                 edge="start"
                 sx={{
-                  marginRight: 5,
+                  marginRight: 4,
                   ...(open && { display: 'none' }),
                 }}
               >
@@ -160,20 +165,20 @@ const Navigation = () => {
               <Divider/>
               <ListItem  component={Link} to="/truck">
                 <ListItemIcon><FireTruckIcon className='icon-default-size'/></ListItemIcon>
-                <ListItemText primary="Trucking" />
+                <ListItemText primary="Truck Type" />
               </ListItem>
               <ListItem  component={Link} to="/warehouse">
                 <ListItemIcon><WarehouseIcon className='icon-default-size'/></ListItemIcon>
                 <ListItemText primary="Warehouse" />
               </ListItem>
-              <ListItem  component={Link} to="/destinationmain">
+              <ListItem  component={Link} to="/destination">
                 <ListItemIcon><MapIcon className='icon-default-size'/></ListItemIcon>
-                <ListItemText primary="Destination Main" />
+                <ListItemText primary="Destination" />
               </ListItem>
-              <ListItem  component={Link} to="/destinationdetail">
+              {/* <ListItem  component={Link} to="/destinationdetail">
                 <ListItemIcon><MapIcon className='icon-default-size'/></ListItemIcon>
                 <ListItemText primary="Destination Details" />
-              </ListItem>
+              </ListItem> */}
               <ListItem  component={Link} to="/form">
                 <ListItemIcon><SummarizeIcon className='icon-default-size'/></ListItemIcon>
                 <ListItemText primary="Form" />
@@ -181,6 +186,10 @@ const Navigation = () => {
               <ListItem  component={Link} to="/taxcode">
                 <ListItemIcon><ContentPasteSearchIcon className='icon-default-size'/></ListItemIcon>
                 <ListItemText primary="Tax Code" />
+              </ListItem>
+              <ListItem  onClick={logoutSumbit} >
+                <ListItemIcon ><PowerSettingsNewIcon color='danger' className='icon-default-size'/></ListItemIcon>
+                <ListItemText primary="Logout" sx={{color:'red'}}/>
               </ListItem>
             </List>
           </Drawer>

@@ -5,7 +5,7 @@ export const getDestinationList = (values) => async (dispatch) => {
     try {
        
         await dispatch(setLoadingTrue())
-        const res = await getData('/destinationmain', values);
+        const res = await getData('/destination', values);
         await dispatch({
             type: Constants.ACTION_DESTINATION,
             payload: {

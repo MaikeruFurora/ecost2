@@ -1,7 +1,8 @@
-import { Box, Stack, Grid,Card,CardContent,List,ListItem,ListItemText,IconButton, Typography, CardHeader, TableBody,Table,TableCell,TableRow,Accordion,AccordionSummary,AccordionActions,AccordionDetails  } from '@mui/material';
+import { Box, Stack, Grid,Card,CardContent,List,ListItem,ListItemText,IconButton, Typography, CardHeader, TableBody,Table,TableCell,TableRow,Accordion,AccordionSummary,AccordionActions,AccordionDetails, TableHead  } from '@mui/material';
 import Input from '@component/Input'
-
+import Accordions from '@component/Accordion'
 import Select from '@component/Select'
+import Masonry from '@mui/lab/Masonry';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -17,13 +18,18 @@ const form = 'MatrixForm'
 const Matrix = (props) => {
   const { handleSubmit} = props;
   const {...ref} = MatrixHooks(props)
+  const [expanded, setExpanded] = React.useState('panel1');
+
+  const handleChange = (panel) => (event, newExpanded) => {
+    setExpanded(newExpanded ? panel : false);
+  };
   return (
     <React.Fragment>
       <Grid container spacing={2}>
         <Grid item xs={12} md={12} lg={12}>
         <Typography variant="p" sx={{fontSize: '15px', fontWeight: 'bold'}}>Trucking Matrix</Typography>
         </Grid>
-        <Grid item xs={12} md={12} lg={12} spacing={2}>
+        <Grid item xs={12} md={12} lg={12}>
             <form autoComplete='off' onSubmit={handleSubmit(ref.submit)}>
               <Grid container direction="row" justifyContent="left" alignItems="flex-end" spacing={2}>
                   <Grid item xs={12} md={2}>
@@ -37,74 +43,48 @@ const Matrix = (props) => {
               </Grid>
             </form>
             <Grid container spacing={2} mt={1}>
-              {ref.matrixList.map((item, index) => (
-                <Grid item xs={12} md={3} key={index}>
-                  <Card variant="outlined">
-                    <CardContent>
-                      <Typography variant="p" >{item['warehouse_name']}</Typography>
-                      <Table size="small">
-                          <TableBody>
-                            {item['data'].map((dataItem, dataIndex) => (
-                              <TableRow key={dataIndex}> 
-                                  <TableCell>
-                                    <Typography variant='caption'>  {dataItem['name']}  </Typography>
-                                  </TableCell>
-                                  <TableCell>
-                                    <Typography> {dataItem['rate']}  </Typography>
-                                  </TableCell>
+              <Grid item xs={12} md={12}>
+                {ref.matrixList.length === 0 ? (
+                  <Typography variant="p" sx={{fontSize: '15px', fontWeight: 'bold'}}>No Data</Typography>
+                ) : (
+                  ref.matrixList.map((item, index) => (
+                  <Accordions
+                    key={index}
+                    title={item.warehouse_name}
+                    panel={item.warehouse_name}
+                    expanded={expanded}
+                    onChange={handleChange}
+                  >
+                    <Grid container spacing={2}>
+                      {item.data.map((item2, ii) => (
+                        <Grid item xs={12} sm={6} md={3} key={ii}>
+                          <Table size="small" sx={{ border: 1, borderColor: 'grey.300' }}>
+                            <TableHead>
+                              <TableRow>
+                                <TableCell colSpan={2}>
+                                  <Typography variant="p" sx={{ fontSize: '12px', fontWeight: 'bold' }}>
+                                    {item2.header_name}
+                                  </Typography>
+                                </TableCell>
                               </TableRow>
-                            ))}
-                          </TableBody>
-                        </Table>
-                    </CardContent>
-                  </Card>
-                </Grid>
-              ))}
-
-<Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1-content"
-          id="panel1-header"
-        >
-          Accordion 1
-        </AccordionSummary>
-        <AccordionDetails>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-          malesuada lacus ex, sit amet blandit leo lobortis eget.
-        </AccordionDetails>
-      </Accordion>
-      <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel2-content"
-          id="panel2-header"
-        >
-          Accordion 2
-        </AccordionSummary>
-        <AccordionDetails>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-          malesuada lacus ex, sit amet blandit leo lobortis eget.
-        </AccordionDetails>
-      </Accordion>
-      <Accordion defaultExpanded>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel3-content"
-          id="panel3-header"
-        >
-          Accordion Actions
-        </AccordionSummary>
-        <AccordionDetails>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-          malesuada lacus ex, sit amet blandit leo lobortis eget.
-        </AccordionDetails>
-        <AccordionActions>
-          <Button>Cancel</Button>
-          <Button>Agree</Button>
-        </AccordionActions>
-      </Accordion>
+                            </TableHead>
+                            <TableBody>
+                              {item2.destination.map((item3, iii) => (
+                                <TableRow key={iii}>
+                                  <TableCell sx={{ fontSize: 12 }}>{item3.name}</TableCell>
+                                  <TableCell sx={{ fontSize: 12 }}>{item3.rate}</TableCell>
+                                </TableRow>
+                              ))}
+                            </TableBody>
+                          </Table>
+                        </Grid>
+                      ))}
+                    </Grid>
+                  </Accordions>
+                )))}
+              </Grid>
             </Grid>
+
         </Grid>
 
       </Grid>

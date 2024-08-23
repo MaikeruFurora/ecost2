@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDestinationHeadersTable extends Migration
+class CreateDestinationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateDestinationHeadersTable extends Migration
      */
     public function up()
     {
-        Schema::create('destination_headers', function (Blueprint $table) {
+        Schema::create('destinations', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->unsignedBigInteger('truck_id');
@@ -34,6 +34,6 @@ class CreateDestinationHeadersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('destination_headers');
+        Schema::dropIfExists('destinations');
     }
 }

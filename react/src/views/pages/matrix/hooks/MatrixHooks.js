@@ -14,12 +14,10 @@ import { useSearchParams } from 'react-router-dom';
 const MatrixHooks = (props) =>{
     const {showMessage} = SweetAlert()
     const dispatch      = useDispatch();
-    const warehouses    = useSelector((state) => state.WarehouseReducer.dataList) 
     const trucks        = useSelector((state) => state.TruckReducer.dataList) 
-    const matrixList       = useSelector((state) => state.DestinationReducer.dataList) 
+    const matrixList    = useSelector((state) => state.DestinationReducer.dataList) 
     
     React.useEffect(() => {
-        dispatch(getAllWarehouseList())
         dispatch(getAllTruckList())
         // dispatch(getAllTruckingRates())
     }, []);
@@ -27,7 +25,7 @@ const MatrixHooks = (props) =>{
     const submit = async (values) => {
         try {
             await dispatch(setLoadingTrue());
-            const res = await getData('/destinationmain/trucking-matrix', values);
+            const res = await getData('/destination/trucking-matrix', values);
             await dispatch({
                 type: Constants.ACTION_DESTINATION,
                     payload: {
@@ -47,7 +45,6 @@ const MatrixHooks = (props) =>{
     
 
     return {
-        warehouses,
         trucks,
         matrixList,
         submit,

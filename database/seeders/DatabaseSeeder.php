@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
         $this->call(FormSeeder::class);
         $this->call(ProductPriceTypeSeeder::class);
         $this->call(TruckSeeder::class);
-        $this->call(DestinationHeaderSeeder::class);
-        $this->call(DestinationSubSeeder::class);
+        $this->call(DestinationSeeder::class);
+        $this->call(DestinationRateSeeder::class);
     }
 }

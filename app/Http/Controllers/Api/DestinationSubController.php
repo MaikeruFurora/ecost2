@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DestinationDetailRequest;
-use App\Models\DestinationHeader;
+use App\Models\Destination;
 use App\Models\DestinationSub;
 use Illuminate\Http\Request;
 use App\Traits\FormatsPaginatedResponse;
@@ -14,10 +14,10 @@ class DestinationSubController extends Controller
     
     use FormatsPaginatedResponse;
 
-    protected $destinationHeader;
+    protected $destination;
     protected $destinationSub;
     public function __construct() {
-        $this->destinationHeader  = new DestinationHeader();
+        $this->destination  = new Destination();
         $this->destinationSub     = new DestinationSub();
     }
     /**
@@ -31,11 +31,11 @@ class DestinationSubController extends Controller
         $page    = $request->get('p');
 
         $results = $this->destinationSub
-                    ->select('destination_subs.*','users.name as created_by_name','destination_headers.name as header_name','warehouses.name as warehouse_name','trucks.name as truck_name')
+                    ->select('destination_subs.*','users.name as created_by_name','destination_s.name as _name','warehouses.name as warehouse_name','trucks.name as truck_name')
                     ->join('users','destination_subs.created_by', '=', 'users.id')
-                    ->join('destination_headers','destination_subs.destination_header_id', '=', 'destination_headers.id')
-                    ->join('warehouses','destination_headers.warehouse_id', '=', 'warehouses.id')
-                    ->join('trucks','destination_headers.truck_id', '=', 'trucks.id')
+                    ->join('destination_s','destination_subs.destination__id', '=', 'destination_s.id')
+                    ->join('warehouses','destination_s.warehouse_id', '=', 'warehouses.id')
+                    ->join('trucks','destination_s.truck_id', '=', 'trucks.id')
                     ->where('warehouses.name', 'LIKE', "%{$query}%")
                     ->orwhere('trucks.name', 'LIKE', "%{$query}%")
                     ->paginate(10, ['*'], 'page', $page);
@@ -95,11 +95,11 @@ class DestinationSubController extends Controller
         //
     }
 
-    public function getAllDestinationHeaders(Request $request){
+    public function getAllDestinations(Request $request){
         
         return response([
-            'dataList'     => DestinationHeader::where('warehouse_id', $request->warehouse_id)->where('truck_id', $request->truck_id)->get(),
-            'dataListCount'=> DestinationHeader::all()->count(),
+            'dataList'     => Destination::where('warehouse_id', $request->warehouse_id)->where('truck_id', $request->truck_id)->get(),
+            'dataListCount'=> Destination::all()->count(),
         ]);
     }
 }

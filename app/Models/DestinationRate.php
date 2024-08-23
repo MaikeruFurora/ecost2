@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
-class DestinationHeader extends Model
+class DestinationRate extends Model
 {
     use HasFactory;
 
@@ -15,8 +15,8 @@ class DestinationHeader extends Model
     protected $casts = [
         'created_at' => 'datetime:M d, Y ~ h:i A',
         'updated_at' => 'datetime:M d, Y ~ h:i A',
-    ];
-    
+    ]; 
+
     public function setNameAttribute($value)
     {
         $this->attributes['name'] = strtoupper($value);
@@ -37,4 +37,5 @@ class DestinationHeader extends Model
             $model->modified_by = Auth::id();
         });
     }
+
 }

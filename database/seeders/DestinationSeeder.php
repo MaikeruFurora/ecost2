@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\DestinationHeader;
+use App\Models\Destination;
 use Illuminate\Database\Seeder;
 
-class DestinationHeaderSeeder extends Seeder
+class DestinationSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,7 +14,7 @@ class DestinationHeaderSeeder extends Seeder
      */
     public function run()
     {
-        return DestinationHeader::insert([
+        return Destination::insert([
             /**
              * 
              *  CALACA

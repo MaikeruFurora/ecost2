@@ -1,8 +1,6 @@
 import {
-    getDestinationList,
-    getAllWarehouseList,
-    getAllTruckList
-} from '../actions/DestinationAction'
+    getDestinationRateList,
+} from '../actions/DestinationRateAction'
 import { setLoadingTrue, setLoadingFalse } from '@services/global';
 import Constants from '@reducer-contant';
 import { postData,putData } from '@services/ApiServices';
@@ -11,76 +9,74 @@ import { useSelector,useDispatch } from 'react-redux';
 import SweetAlert from '@services/SweetAlert';
 import { change,reset  } from 'redux-form';
 import { useSearchParams } from 'react-router-dom';
-const DestiantionHooks = (props) =>{
-    const form = 'DestinationForm'
+const DestiantionRateHooks = (props) =>{
+    const form = 'DestinationRateForm'
     const dispatch      = useDispatch();
     const [searchParams, setSearchParams] = useSearchParams();
-    const [currentPage, setCurrentPage]   = useState(parseInt(searchParams.get("p")) || 1);
-    const search        = searchParams.get("q") || "";
+    const [currentPage, setCurrentPage]   = useState(parseInt(searchParams.get("page")) || 1);
+    const search        = searchParams.get("query") || "";
     const {showMessage} = SweetAlert()
-    const warehouses    = useSelector((state) => state.WarehouseReducer.dataList) 
-    const trucks        = useSelector((state) => state.TruckReducer.dataList) 
-    const dataList      = useSelector((state) => state.DestinationReducer.dataList);
-    const dataListCount = useSelector((state) => state.DestinationReducer.dataListCount);
-    const refresh       = useSelector((state) => state.DestinationReducer.refresh);
-    const prevPageUrl   = useSelector((state) => state.DestinationReducer.prevPageUrl);
-    const nextPageUrl   = useSelector((state) => state.DestinationReducer.nextPageUrl);
+    const dataList      = useSelector((state) => state.DestinationRateReducer.dataList);
+    const dataListCount = useSelector((state) => state.DestinationRateReducer.dataListCount);
+    const refresh       = useSelector((state) => state.DestinationRateReducer.refresh);
+    const prevPageUrl   = useSelector((state) => state.DestinationRateReducer.prevPageUrl);
+    const nextPageUrl   = useSelector((state) => state.DestinationRateReducer.nextPageUrl);
     const [id, setId]   = useState(null);
+    const destination   = props.selectedDestination.id;
+
       const getListParam = () => ({
-        p: currentPage,
-        q: search,
+        page: currentPage,
+        query: search,
+        i: destination,
     });
 
     const DestinationList = async () => {
         try {
             const filter = getListParam();
-            await dispatch(getDestinationList(filter));
+            await dispatch(getDestinationRateList(filter));
         } catch (error) {
             console.error("Failed to fetch products", error);
         }
     };
 
     React.useEffect(() => {
-        dispatch(getAllWarehouseList())
-        dispatch(getAllTruckList())
         DestinationList();
-       
     }, [currentPage, search,refresh]);
 
     const onPageChange = (page) => {
         setCurrentPage(page);
-        setSearchParams({ q: search, p: page });
+        setSearchParams({ query: search, page: page, i: destination });
     };
 
     const onSearchChange = (event) => {
         const search = event.target.value;
-        setSearchParams({ q: search, p: "1" });
+        setSearchParams({ query: search, page: "1", i: destination });
         setCurrentPage(1);
     };
 
     const submit = async (values) => {
         const data = {
             'name' : values.name,
-            'truck_id' : values.truck_id,
-            'warehouse_id' : values.warehouse_id,
+            'rate' : values.rate,
+            'destination_id' : destination,
         }
         try {
             await dispatch(setLoadingTrue())
             let res;
             if (id) {
-                res = await putData(`destinationmain/${id}`, data);
+                res = await putData(`destinationrate/${id}`, data);
             } else {
-                res = await postData('/destinationmain', data);
+                res = await postData('/destinationrate', data);
             }
             await dispatch({
-                type: Constants.ACTION_DESTINATION,
+                type: Constants.ACTION_DESTINATION_RATE,
                     payload: {
                     refresh: !refresh,
                 },
             });
             setId(null);
             dispatch(reset(form));
-            showMessage(res.status, res.message);
+            // showMessage(res.status, res.message);
         } catch (error) {
             showMessage('error', error.response.data?.message);
         } finally{
@@ -95,17 +91,16 @@ const DestiantionHooks = (props) =>{
         })
     }
 
+
     
     const columns = [
-        { id:'truck_name',description:'TRUCK' },
-        { id:'warehouse_name',description:'WAREHOUSE' },
-        { id:'name',description:'DESTINATION (MAIN / PROVINCE)' },
-        { id:'created_by_name',description:'CREATED BY' },
-        { id:'created_at',description:'CREATED AT' },
+        { id:'name',description:'DESTINATION (CITY/MUNICIPALITY)' },
+        { id:'rate',description:'RATE' },
     ]
 
 
     return {
+        open,
         form,
         dataList,
         columns,
@@ -114,8 +109,6 @@ const DestiantionHooks = (props) =>{
         nextPageUrl,
         currentPage,
         dataListCount,
-        warehouses,
-        trucks,
         submit,
         handleEdit,
         onPageChange,
@@ -124,4 +117,4 @@ const DestiantionHooks = (props) =>{
 }
 
 
-export default DestiantionHooks;
+export default DestiantionRateHooks;

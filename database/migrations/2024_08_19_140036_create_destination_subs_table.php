@@ -15,13 +15,6 @@ class CreateDestinationSubsTable extends Migration
     {
         Schema::create('destination_subs', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('destination_header_id');
-            $table->foreign('destination_header_id')->references('id')->on('destination_headers')->onDelete('cascade')->onUpdate('cascade');
-            $table->string('name');
-            $table->string('rate');
-            $table->string('created_by')->nullable();
-            $table->string('modified_by')->nullable();
-            $table->timestamp('deleted_at')->nullable();
             $table->timestamps();
         });
     }

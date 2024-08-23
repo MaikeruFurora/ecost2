@@ -11,6 +11,7 @@ import TruckReducer from "./TruckReducer";
 import PriceTypeReducer from "./PriceTypeReducer";
 import DestinationReducer from "./DestinationReducer";
 import DestinationDetailReducer from "./DestinationDetailReducer";
+import DestinationRateReducer from "./DestinationRateReducer";
 export default combineReducers({
     ProductReducer           : ProductReducer,
     LoadingReducer           : LoadingReducer,
@@ -22,6 +23,7 @@ export default combineReducers({
     TruckReducer             : TruckReducer,
     PriceTypeReducer         : PriceTypeReducer,
     DestinationReducer       : DestinationReducer,
+    DestinationRateReducer   : DestinationRateReducer,
     DestinationDetailReducer : DestinationDetailReducer,
     form: formReducer,
 });

@@ -1,8 +1,9 @@
 import {
     getTaxCodeList
 } from '../actions/TaxCodeAction'
+import { setLoadingTrue, setLoadingFalse } from '@services/global';
 import Constants from '@reducer-contant';
-import { postData } from '@services/ApiServices';
+import { postData,putData } from '@services/ApiServices';
 import React,{useState} from "react";
 import { useSelector,useDispatch } from 'react-redux';
 import SweetAlert from '@services/SweetAlert';
@@ -20,6 +21,8 @@ const TaxCodeHooks = (props) =>{
     const refresh       = useSelector((state) => state.TaxCodeReducer.refresh);
     const prevPageUrl   = useSelector((state) => state.TaxCodeReducer.prevPageUrl);
     const nextPageUrl   = useSelector((state) => state.TaxCodeReducer.nextPageUrl);
+    const [id, setId]   = useState(null);
+
     const getListParam = () => ({
         p: currentPage,
         q: search,
@@ -52,32 +55,36 @@ const TaxCodeHooks = (props) =>{
 
     const submit = async (values) => {
         try {
-            await dispatch({
-                type: Constants.ACTION_LOADING,
-                payload:{
-                    loading:true,
-                }
-            })
-            const res = await postData('/taxcode', values);
+            await dispatch(setLoadingTrue());
+            let res;
+            if (id) {
+                res = await putData(`taxcode/${id}`, values);
+            } else {
+                res = await postData('/taxcode', values);
+            }
             await dispatch({
                 type: Constants.ACTION_TAXCODE,
-                    payload: {
+                payload: {
                     refresh: !refresh,
                 },
             });
+            setId(null);
             showMessage(res.status, res.message);
             dispatch(reset(form));
         } catch (error) {
             showMessage('error', error.response.data?.message);
         } finally{
-            await dispatch({
-                type: Constants.ACTION_LOADING,
-                    payload: {
-                    loading: false,
-                },
-            });
+            await dispatch(setLoadingFalse());
         }
       };
+
+      const handleEdit = async (data) => {
+        setId(data.id);
+        Object.keys(data).map(key => {
+            dispatch(change(form, key, data[key]));
+        })
+    }
+
 
 
     
@@ -98,6 +105,7 @@ const TaxCodeHooks = (props) =>{
         submit,
         onPageChange,
         onSearchChange,
+        handleEdit,
     }
 }
 

@@ -6,8 +6,8 @@ import { useSearchParams } from 'react-router-dom'
 import { useSelector,useDispatch } from 'react-redux';
 const ProductHooks = (props) =>{
     const [searchParams, setSearchParams] = useSearchParams();
-    const [currentPage, setCurrentPage] = useState(parseInt(searchParams.get("p")) || 1);
-    const search          = searchParams.get("q") || "";
+    const [currentPage, setCurrentPage] = useState(parseInt(searchParams.get("page")) || 1);
+    const search          = searchParams.get("query") || "";
     const dispatch        = useDispatch();
     const dataList        = useSelector((state) => state.ProductReducer.dataList);
     const dataListCount   = useSelector((state) => state.ProductReducer.dataListCount);

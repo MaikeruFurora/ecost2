@@ -34,7 +34,7 @@ const ProductPriceHooks = (props) =>{
     React.useEffect(() => {
         dispatch(getPriceType());
         getProductPriceLogList();
-    }, [currentPage, search,,product, refresh]);
+    }, [currentPage, search,product, refresh]);
 
     const onPageChange = (page) => {
         setCurrentPage(page);

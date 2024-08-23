@@ -1,5 +1,6 @@
-import { Box, Stack, Grid,Card,CardContent,Typography } from '@mui/material';
+import { Box, Stack, Grid,Card,CardContent,Typography,IconButton } from '@mui/material';
 import Input from '@component/Input'
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Table from '@component/Table'
 import Select from '@component/Select'
 import Button from '@component/Button'
@@ -54,6 +55,12 @@ const TaxCode = (props) => {
                     size="small"
                     dataList={ref.dataList}
                     columns={ref.columns}
+                    actionshow={true}
+                    action={(row) => {
+                      return (
+                        <IconButton size='small' variant="text" color="secondary" sx={{padding:.2,margin:0 }} onClick={() => ref.handleEdit(row)}><AddCircleIcon  sx={{fontSize:20}} tooltip="Edit"/></IconButton>
+                      )
+                    }}
                   />
             </Grid>
           </Grid>

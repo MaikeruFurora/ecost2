@@ -35,8 +35,8 @@ class ProductController extends Controller
     public function index(Request $request)
     {
 
-        $query   = $request->get('q'); 
-        $page    = $request->get('p'); 
+        $query   = $request->get('query'); 
+        $page    = $request->get('page'); 
 
         // $results =  Product::with(['warehouses','tax_codes','companies'])
         $results =  Product::select(['products.*', 'tax_codes.name as tax_code_name', 'companies.name as company_name', 'warehouses.name as warehouse_name', 'forms.name as form_name'])

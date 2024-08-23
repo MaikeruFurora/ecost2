@@ -2,8 +2,6 @@ import { Box, Stack, Grid,Card,CardContent,List,ListItem,ListItemText,IconButton
 import Input from '@component/Input'
 import Table from '@component/Table'
 import Select from '@component/Select'
-import AddCircleIcon from '@mui/icons-material/AddCircle';
-import CancelIcon from '@mui/icons-material/Cancel';
 import Button from '@component/Button'
 import SearchField from '@component/SearchField'
 import Paginations from '@component/Pagination'
@@ -11,9 +9,9 @@ import * as React from 'react';
 import {connect} from "react-redux"
 import { reduxForm,Field,formValueSelector } from 'redux-form'
 import DestinationDetailHooks from './hooks/DestinationDetailHooks';
-const form = 'DestinationDetailForm'
+const form = 'DestinationRateForm'
 
-const DestinationDetail = (props) => {
+const DestinationRate = (props) => {
   const { handleSubmit} = props;
   const {...ref} = DestinationDetailHooks(props)
   return (
@@ -156,7 +154,7 @@ const DestinationDetail = (props) => {
 
 const ReduxFormComponent =  reduxForm({
   form,
-})(DestinationDetail)
+})(DestinationRate)
 const selector = formValueSelector(form);
 export default connect((state) => {
   const truck = selector(state, "truck_id");
