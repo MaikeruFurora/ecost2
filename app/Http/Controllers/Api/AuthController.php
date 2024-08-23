@@ -10,6 +10,11 @@ use Illuminate\Support\Facades\Auth;
 class AuthController extends Controller
 {
 
+    public function csrfToken(){
+        return response()->json([
+            'csrf_token' => csrf_token()
+        ],200);
+    }
     public function index(){
 
         return response()->json([

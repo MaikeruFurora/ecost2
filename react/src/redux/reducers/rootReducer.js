@@ -6,12 +6,22 @@ import WarehouseReducer from "./WarehouseReducer";
 import TaxCodeReducer from "./TaxCodeReducer";
 import AuthenticationReducer from "./AuthenticationReducer";
 import CompanyReducer from "./CompanyReducer";
+import FormDocReducer from "./FormDocReducer";
+import TruckReducer from "./TruckReducer";
+import PriceTypeReducer from "./PriceTypeReducer";
+import DestinationReducer from "./DestinationReducer";
+import DestinationDetailReducer from "./DestinationDetailReducer";
 export default combineReducers({
-    ProductReducer        : ProductReducer,
-    LoadingReducer        : LoadingReducer,
-    WarehouseReducer      : WarehouseReducer,
-    TaxCodeReducer        : TaxCodeReducer,
-    AuthenticationReducer : AuthenticationReducer,
-    CompanyReducer        : CompanyReducer,
+    ProductReducer           : ProductReducer,
+    LoadingReducer           : LoadingReducer,
+    WarehouseReducer         : WarehouseReducer,
+    TaxCodeReducer           : TaxCodeReducer,
+    AuthenticationReducer    : AuthenticationReducer,
+    CompanyReducer           : CompanyReducer,
+    FormDocReducer           : FormDocReducer,
+    TruckReducer             : TruckReducer,
+    PriceTypeReducer         : PriceTypeReducer,
+    DestinationReducer       : DestinationReducer,
+    DestinationDetailReducer : DestinationDetailReducer,
     form: formReducer,
 });

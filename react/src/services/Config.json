@@ -1,0 +1,15 @@
+{
+    "system_name":"E-Costing",
+    "bg_primary":"#396920",
+    "bg_secondary":"#186869",
+    "table":{
+        "thead":{
+            "color":"#396920",
+            "size":"20"
+        }
+    },
+    "button":{
+        "bg_primary": "#396920",
+        "bg_secondary": "#186869"
+    }
+}

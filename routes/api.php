@@ -1,9 +1,15 @@
 <?php
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CompanyController;
+use App\Http\Controllers\Api\DestinationHeaderController;
+use App\Http\Controllers\Api\DestinationSubController;
+use App\Http\Controllers\Api\FormController;
 use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\ProductPriceLogController;
 use App\Http\Controllers\Api\TaxCodeController;
 use App\Http\Controllers\Api\WarehouseController;
+use App\Http\Controllers\Api\TruckController;
+use App\Models\DestinationHeader;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,24 +25,41 @@ use Illuminate\Support\Facades\Route;
 */
 Route::post('auth/login', [AuthController::class, 'login']);
 Route::post('auth/logout', [AuthController::class, 'logout']);
-Route::get('auth/csrf-token', function () {
-    return response()->json(['csrf_token' => csrf_token()]);
-});
+Route::get('auth/csrf-token', [AuthController::class, 'csrfToken']);
+
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
     
-    Route::get('/products/searchProductFromSAP', [ProductController::class, 'searchProductFromSAP']);
-    Route::resource('/products', ProductController::class);
+    Route::resource('/price-log', ProductPriceLogController::class);
     
-    Route::get('/warehouses/getAllWwarehouses', [WarehouseController::class,'getAllWwarehouses']);
-    Route::resource('/warehouses', WarehouseController::class);
+    Route::get('/product/price-type', [ProductController::class, 'priceType']);
+    Route::post('/product/price-update', [ProductController::class, 'priceUpdate']);
+    Route::get('/product/search-product-from-SAP', [ProductController::class, 'searchProductFromSAP']);
+    Route::resource('/product', ProductController::class);
     
-    Route::get('/taxcodes/getAllTaxCodes', [TaxCodeController::class,'getAllTaxCodes']);
-    Route::resource('/taxcodes', TaxCodeController::class);
+    Route::get('/warehouse/get-all-warehouses', [WarehouseController::class,'getAllWwarehouses']);
+    Route::resource('/warehouse', WarehouseController::class);
     
-    Route::get('/companies/getAllCompanies', [CompanyController::class,'getAllTaxCompanies']);
-    Route::resource('/companies', CompanyController::class);
+    Route::get('/taxcode/get-all-tax-codes', [TaxCodeController::class,'getAllTaxCodes']);
+    Route::resource('/taxcode', TaxCodeController::class);
+    
+    Route::get('/company/get-all-companies', [CompanyController::class,'getAllTaxCompanies']);
+    Route::resource('/company', CompanyController::class);
+    
+    Route::get('/form/get-all-forms', [FormController::class, 'getAllForms']);
+    Route::resource('/form', FormController::class);
+
+    Route::get('/truck/get-all-trucks', [TruckController::class, 'getAllTrucks']);
+    Route::resource('/truck', TruckController::class);
+    
+    Route::get('/destinationmain/trucking-matrix', [DestinationHeaderController::class, 'truckingMatrix']);
+    Route::get('/destinationmain/get-all', [DestinationHeaderController::class, 'getAllDestinationHeaders']);
+    Route::resource('/destinationmain', DestinationHeaderController::class);
+    
+    Route::get('/destinationdetail/get-all-destination-headers', [DestinationSubController::class, 'getAllDestinationHeaders']);
+    Route::resource('/destinationdetail', DestinationSubController::class);
+    
 });

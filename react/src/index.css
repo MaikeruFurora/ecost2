@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.small-header {
+    font-size: 0.75rem; /* Adjust font size */
+    padding: 4px 8px;   /* Adjust padding */
+}
+
+.icon-default-size{
+  font-size: 10;
+}

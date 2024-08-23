@@ -1,15 +1,23 @@
 import { Outlet,Navigate } from 'react-router-dom'
-import { useStateContext } from '../context/contextProvider'
+import { useStateContext } from '@context/contextProvider'
+import { Box } from '@mui/material';
 const GuestLayout = () => {
     const {token} = useStateContext()
-
     if (token) {
         return <Navigate to="/product"/>
     }
     return (
-        <div className="flex items-center justify-center min-h-screen bg-gray-100">
-            <Outlet/>
-        </div>
+        <Box
+            sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: '100vh',
+                padding: 2,
+            }}
+        >
+        <Outlet/>
+    </Box>
     )
 }
 export default GuestLayout

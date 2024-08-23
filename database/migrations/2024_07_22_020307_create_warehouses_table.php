@@ -17,6 +17,9 @@ class CreateWarehousesTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('group');
+            $table->string('created_by')->nullable();
+            $table->string('modified_by')->nullable();
+            $table->timestamp('deleted_at')->nullable();
             $table->timestamps();
         });
     }

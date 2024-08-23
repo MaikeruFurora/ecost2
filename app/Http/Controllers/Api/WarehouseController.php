@@ -3,12 +3,21 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\WarehouseRequest;
 use Illuminate\Http\Request;
 use App\Models\Warehouse;
 use Illuminate\Support\Facades\Auth;
-
+use App\Traits\FormatsPaginatedResponse;
 class WarehouseController extends Controller
 {
+
+    use FormatsPaginatedResponse;
+
+
+    protected $warehouse;
+    public function __construct() {
+        $this->warehouse  = new Warehouse();
+    }
     /**
      * Display a listing of the resource.
      *
@@ -19,28 +28,12 @@ class WarehouseController extends Controller
         $query   = $request->get('q');
         $page    = $request->get('p');
 
-        $results = Warehouse::where('name', 'like', '%'.$query.'%')->paginate(10);
+        $results = Warehouse::select('warehouses.*','users.name as created_by_name')
+                    ->join('users','warehouses.created_by', '=', 'users.id')
+                    ->where('warehouses.name', 'like', '%'.$query.'%')
+                    ->paginate(10, ['*'], 'page', $page);
 
-         return response()->json([
-            'current_page'   => $results->currentPage(),
-            'dataList'       => $results->items(),
-            'first_page_url' => $results->url(1),
-            'from'           => $results->firstItem(),
-            'last_page'      => $results->lastPage(),
-            'last_page_url'  => $results->url($results->lastPage()),
-            'next_page_url'  => $results->nextPageUrl(),
-            'per_page'       => $results->perPage(),
-            'prev_page_url'  => $results->previousPageUrl(),
-            'to'             => $results->lastItem(),
-            'total'          => $results->total(),
-            'links'          => [
-                'first' => $results->url(1),
-                'last'  => $results->url($results->lastPage()),
-                'prev'  => $results->previousPageUrl(),
-                'next'  => $results->nextPageUrl(),
-            ],
-        ]);
-
+        return response()->json($this->formatPaginatedResponse($results));
 
     }
 
@@ -50,9 +43,18 @@ class WarehouseController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(WarehouseRequest $request)
     {
-        //
+        $validatedData = $request->validated();
+
+        $truck = Warehouse::create($validatedData);
+
+        $response = [
+            'status' => $truck ? 'success' : 'error',
+            'message' => $truck ? 'Successfully saved' : 'Something went wrong',
+        ];
+
+        return response()->json($response);
     }
 
     /**
@@ -73,9 +75,16 @@ class WarehouseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(WarehouseRequest $request, $id)
     {
-        //
+        $validatedData = $request->validated();
+
+        $this->warehouse->find($id)->update($validatedData);
+
+        return response()->json([
+            'status'  => 'success',
+            'message' => 'Successfully updated',
+        ]);
     }
 
     /**
@@ -94,10 +103,6 @@ class WarehouseController extends Controller
         return response()->json([
             'dataListCount'=> Warehouse::all()->count(),
             'dataList'     => Warehouse::orderBy('group','asc')->orderBy('name','asc')->get(['id','name','group']),
-            // 'dataList'     => [
-            //     'manila'   => Warehouse::manilaGroup()->get(['id','name']),
-            //     'province' => Warehouse::provinceGroup()->get(['id','name']),
-            // ],
         ]);
     }
 }

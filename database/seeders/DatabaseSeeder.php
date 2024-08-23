@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\DestinationHeader;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,9 +14,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
-        // return $this->call(WarehouseSeeder::class);
-        // return $this->call(TaxCodeSeeder::class);
-        //  $this->call(CompanySeeder::class);
+        \App\Models\User::factory(1)->create();
+        $this->call(WarehouseSeeder::class);
+        $this->call(TaxCodeSeeder::class);
+        $this->call(CompanySeeder::class);
+        $this->call(FormSeeder::class);
+        $this->call(ProductPriceTypeSeeder::class);
+        $this->call(TruckSeeder::class);
+        $this->call(DestinationHeaderSeeder::class);
+        $this->call(DestinationSubSeeder::class);
     }
 }
