@@ -17,8 +17,8 @@ const ProductHooks = (props) =>{
     const [open, setOpen] = useState(false);
     const [product, setProduct] = useState({});
     const getListParam = () => ({
-        p: currentPage,
-        q: search,
+        page: currentPage,
+        page: search,
     });
 
     const getProductLists = async () => {
@@ -36,12 +36,12 @@ const ProductHooks = (props) =>{
 
     const onPageChange = (page) => {
         setCurrentPage(page);
-        setSearchParams({ q: search, p: page });
+        setSearchParams({ query: search, page: page });
     };
 
     const onSearchChange = (event) => {
         const search = event.target.value;
-        setSearchParams({ q: search, p: "1" });
+        setSearchParams({ query: search, page: "1" });
         setCurrentPage(1);
     };
 

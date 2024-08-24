@@ -45,10 +45,10 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 const CustomAccordion = ({ title, children, panel, expanded, onChange }) => (
   <Accordion expanded={expanded === panel} onChange={onChange(panel)}>
     <AccordionSummary aria-controls={`${panel}d-content`} id={`${panel}d-header`}>
-      <Typography>{title}</Typography>
+      {title}
     </AccordionSummary>
     <AccordionDetails>
-      <Typography>{children}</Typography>
+      {children}
     </AccordionDetails>
   </Accordion>
 );
