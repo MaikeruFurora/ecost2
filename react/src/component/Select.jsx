@@ -5,7 +5,7 @@ const styleSheet = {
   label: { fontSize: 14, marginTop: 1, marginBottom: 0 },
 };
 
-const CustomSelect = ({ input, meta, data,val, label, ...rest }) => {
+const CustomSelect = ({ input, meta, data,val,firstItem = true, label, ...rest }) => {
   return (
     <Box>
       {label && (
@@ -28,6 +28,7 @@ const CustomSelect = ({ input, meta, data,val, label, ...rest }) => {
           displayEmpty
           // renderValue={(selected) => selected || <em>Please Select</em>}
         >
+
           <MenuItem value="" disabled>Please Select</MenuItem>
           {data.map((option, index) => (
             <MenuItem key={index} value={val=="text"?option.name:option.id}  sx={{  fontSize: 14 }}>

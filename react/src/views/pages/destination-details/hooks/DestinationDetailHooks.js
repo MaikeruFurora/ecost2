@@ -7,7 +7,7 @@ import {
 } from '../actions/DestinationDetailAction'
 import Constants from '@reducer-contant';
 import { postData,putData } from '@services/ApiServices';
-import { setLoadingTrue, setLoadingFalse } from '@services/global';
+import { setLoadingTrue, setLoadingFalse } from '@services/Global';
 import React,{useState} from "react";
 import { useSelector,useDispatch } from 'react-redux';
 import SweetAlert from '@services/SweetAlert';
@@ -96,7 +96,7 @@ const DestinationDetailHooks = (props) =>{
                 list: [],
             }));
         } catch (error) {
-            showMessage('error', error.response.data?.message);
+            showMessage('warning', error.response.data?.message);
         } finally{
             await dispatch(setLoadingFalse())
         }

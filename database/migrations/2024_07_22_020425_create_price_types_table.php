@@ -16,8 +16,8 @@ class CreatePriceTypesTable extends Migration
         Schema::create('price_types', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('created_by')->nullable();
-            $table->string('modified_by')->nullable();
+            $table->integer('created_by')->unsigned();
+            $table->integer('modified_by')->unsigned();
             $table->timestamp('deleted_at')->nullable();
             $table->timestamps();
         });

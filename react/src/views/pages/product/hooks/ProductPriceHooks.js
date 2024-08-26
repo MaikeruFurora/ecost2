@@ -74,7 +74,7 @@ const ProductPriceHooks = (props) =>{
                 }
             })
             } catch (error) {
-                showMessage('error', error.response.data?.message);
+                showMessage('warning', error.response.data?.message);
             } finally{
                 await dispatch({
                     type: Constants.ACTION_LOADING,

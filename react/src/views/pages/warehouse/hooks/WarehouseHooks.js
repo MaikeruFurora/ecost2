@@ -1,7 +1,7 @@
 import {
     getWarehouseList
 } from '../actions/WarehouseAction'
-import { setLoadingTrue, setLoadingFalse } from '@services/global';
+import { setLoadingTrue, setLoadingFalse } from '@services/Global';
 import Constants from '@reducer-contant';
 import { postData,putData } from '@services/ApiServices';
 import React,{useState} from "react";
@@ -71,7 +71,7 @@ const WarehouseHooks = (props) =>{
             showMessage(res.status, res.message);
             dispatch(reset(form));
         } catch (error) {
-            showMessage('error', error.response.data?.message);
+            showMessage('warning', error.response.data?.message);
         } finally{
             await dispatch(setLoadingFalse())
         }

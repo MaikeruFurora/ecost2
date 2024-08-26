@@ -17,8 +17,8 @@ const ProductHooks = (props) =>{
     const [open, setOpen] = useState(false);
     const [product, setProduct] = useState({});
     const getListParam = () => ({
-        page: currentPage,
-        page: search,
+        page:  currentPage,
+        query: search,
     });
 
     const getProductLists = async () => {
@@ -50,23 +50,20 @@ const ProductHooks = (props) =>{
         { id: 'name', description: 'ITEM DESCRIPTION', align: 'left' },
         { id: 'sku', description: 'SKU', align: 'left' },
         { id: 'brand', description: 'BRAND', align: 'left' },
-        { id: 'form_name', description: 'FORM', align: 'left' },
-        { id: 'tax_code_name', description: 'TAX CODE', align: 'left' },
-        { id: 'company_name', description: 'COMPANY', align: 'left' },
-        { id: 'warehouse_name', description: 'WAREHOUSE', align: 'left' },
-        { id: 'pickup_price', description: 'PICKUP', align: 'left' },
-        { id: 'volume_price', description: 'VOLUME', align: 'left' },
+        { id: 'group', description: 'GROUP', align: 'left' },
     ];
 
 
     const handleOpen = (data) => {
         setOpen(true);
         setProduct(data);
+        // setSearchParams({});
     };
 
     const handleClose = () => {
         setOpen(false);
         setProduct({});
+        // setSearchParams({ query: search, page: currentPage });
     };
 
     return {

@@ -20,8 +20,8 @@ class CreateProductPriceLogsTable extends Migration
             $table->unsignedBigInteger('product_price_type_id');
             $table->foreign('product_price_type_id')->references('id')->on('product_price_types')->onDelete('cascade')->onUpdate('cascade');
             $table->double('price');
-            $table->string('created_by')->nullable();
-            $table->string('modified_by')->nullable();
+            $table->integer('created_by')->unsigned();
+            $table->integer('modified_by')->unsigned();
             $table->timestamp('deleted_at')->nullable();
             $table->timestamps();
         });

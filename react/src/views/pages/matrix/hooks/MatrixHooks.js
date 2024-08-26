@@ -3,7 +3,7 @@ import {
     getAllTruckList,
     // getAllTruckingRates
 } from '../actions/MatrixActions'
-import { setLoadingTrue, setLoadingFalse } from '@services/global';
+import { setLoadingTrue, setLoadingFalse } from '@services/Global';
 import Constants from '@reducer-contant';
 import { getData } from '@services/ApiServices';
 import React,{useState} from "react";
@@ -36,7 +36,7 @@ const MatrixHooks = (props) =>{
             showMessage(res.status, res.message);
             dispatch(reset(form));
         } catch (error) {
-            showMessage('error', error.response.data?.message);
+            showMessage('warning', error.response.data?.message);
         } finally{
             await dispatch(setLoadingFalse());
         }

@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\DestinationHeader;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -23,5 +22,7 @@ class DatabaseSeeder extends Seeder
         $this->call(TruckSeeder::class);
         $this->call(DestinationSeeder::class);
         $this->call(DestinationRateSeeder::class);
+        $this->call(ProductSeeder::class);
+        $this->call(ProductPricingSeeder::class);
     }
 }

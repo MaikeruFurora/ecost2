@@ -15,12 +15,11 @@ class CreateDestinationRatesTable extends Migration
     {
         Schema::create('destination_rates', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('destination_id');
-            $table->foreign('destination_id')->references('id')->on('destinations')->onDelete('cascade')->onUpdate('cascade');
+            $table->integer('destination_id')->unsigned();
             $table->string('name');
             $table->string('rate');
-            $table->string('created_by')->nullable();
-            $table->string('modified_by')->nullable();
+            $table->integer('created_by')->unsigned();
+            $table->integer('modified_by')->unsigned();
             $table->timestamp('deleted_at')->nullable();
             $table->timestamps();
         });
@@ -33,6 +32,6 @@ class CreateDestinationRatesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('rates');
+        Schema::dropIfExists('destination_rates');
     }
 }

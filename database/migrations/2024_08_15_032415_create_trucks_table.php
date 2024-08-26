@@ -17,8 +17,8 @@ class CreateTrucksTable extends Migration
             $table->id();
             $table->string('name',100);
             $table->decimal('capacity');
-            $table->string('created_by')->nullable();
-            $table->string('modified_by')->nullable();
+            $table->integer('created_by')->unsigned();
+            $table->integer('modified_by')->unsigned();
             $table->timestamp('deleted_at')->nullable();
             $table->timestamps();
         });

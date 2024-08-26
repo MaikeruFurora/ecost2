@@ -3,7 +3,7 @@ import {
     getAllWarehouseList,
     getAllTruckList
 } from '../actions/DestinationAction'
-import { setLoadingTrue, setLoadingFalse } from '@services/global';
+import { setLoadingTrue, setLoadingFalse } from '@services/Global';
 import Constants from '@reducer-contant';
 import { postData,putData } from '@services/ApiServices';
 import React,{useState} from "react";
@@ -96,7 +96,7 @@ const DestiantionHooks = (props) =>{
             dispatch(reset(form));
             showMessage(res.status, res.message);
         } catch (error) {
-            showMessage('error', error.response.data?.message);
+            showMessage('warning', error.response.data?.message);
         } finally{
             await dispatch(setLoadingFalse());
         }

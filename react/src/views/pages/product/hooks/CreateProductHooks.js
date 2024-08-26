@@ -97,7 +97,7 @@ let CreateProductHooks = (props) => {
             showMessage(res.status, res.message);
             removeProduct()
         } catch (error) {
-            showMessage('error', error.response.data?.message);
+            showMessage('warning', error.response.data?.message);
         } finally{
             await dispatch({
                 type: Constants.ACTION_LOADING,
@@ -117,7 +117,7 @@ let CreateProductHooks = (props) => {
         try {
             await dispatch(getAllTaxCodes(data));
         } catch (error) {
-            showMessage('error', error);
+            showMessage('warning', error);
         }
       
     }

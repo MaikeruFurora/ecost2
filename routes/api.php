@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\DestinationRateController;
 use App\Http\Controllers\Api\FormController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\ProductPriceLogController;
+use App\Http\Controllers\Api\ProductPricingController;
 use App\Http\Controllers\Api\TaxCodeController;
 use App\Http\Controllers\Api\WarehouseController;
 use App\Http\Controllers\Api\TruckController;
@@ -36,12 +37,17 @@ Route::middleware('auth:sanctum')->group(function () {
     
     Route::resource('/price-log', ProductPriceLogController::class);
     
+    
     Route::get('/product/price-type', [ProductController::class, 'priceType']);
     Route::post('/product/price-update', [ProductController::class, 'priceUpdate']);
     Route::get('/product/search-product-from-SAP', [ProductController::class, 'searchProductFromSAP']);
     Route::resource('/product', ProductController::class);
     
-    Route::get('/warehouse/get-all-warehouses', [WarehouseController::class,'getAllWwarehouses']);
+    Route::get('/product-pricing/get-all-price-matix', [ProductPricingController::class, 'getAllPriceMatrix']);
+    Route::resource('/product-pricing', ProductPricingController::class);
+    
+    Route::get('/warehouse/get-all-warehouse-group', [WarehouseController::class,'getAllWarehouseGroup']);
+    Route::get('/warehouse/get-all-warehouses', [WarehouseController::class,'getAllWarehouses']);
     Route::resource('/warehouse', WarehouseController::class);
     
     Route::get('/taxcode/get-all-tax-codes', [TaxCodeController::class,'getAllTaxCodes']);

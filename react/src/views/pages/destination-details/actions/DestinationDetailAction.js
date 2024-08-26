@@ -1,6 +1,6 @@
 import {getData,getDataNoParam} from '@services/ApiServices';
 import Constants from '@reducer-contant';
-import { setLoadingTrue, setLoadingFalse } from '@services/global';
+import { setLoadingTrue, setLoadingFalse } from '@services/Global';
 export const getDestinationMainList = (values) => async (dispatch) => {
     try {
        
@@ -103,7 +103,7 @@ export const getDestinationList = (values) => async (dispatch) => {
         showMessage(res.status, res.message);
         dispatch(reset(form));
     } catch (error) {
-        showMessage('error', error.response.data?.message);
+        showMessage('warning', error.response.data?.message);
     } finally{
         await dispatch(setLoadingFalse())
     }

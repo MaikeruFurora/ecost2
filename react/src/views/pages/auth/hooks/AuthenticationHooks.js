@@ -4,12 +4,12 @@ import { getUser,fetchCsrfToken } from '../../auth/actions/AuthenticationAction'
 import Constants from '@reducer-contant'
 import useSwal from '@services/SweetAlert';
 import { useStateContext } from '@context/contextProvider';
-import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 const AuthenticateHooks = () => {
     const dispatch = useDispatch();
     const { setToken, setUser } = useStateContext();
     const { showMessage } = useSwal();
-
+    const navigate = useNavigate();
 
     // fetchCsrfToken()
  
@@ -34,7 +34,7 @@ const AuthenticateHooks = () => {
             setToken(res.token);
             setUser(res.user);
         } catch (error) {
-            showMessage('error', error);
+            showMessage('warning', error);
         } finally {
             dispatch({
                 type: Constants.ACTION_LOADING,
@@ -47,6 +47,8 @@ const AuthenticateHooks = () => {
         setToken(null);
         setUser(null);
         localStorage.removeItem('ACCESS_TOKEN');
+        navigate('/login');
+        window.location.reload();
     };
 
     return {

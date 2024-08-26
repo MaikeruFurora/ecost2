@@ -1,6 +1,6 @@
 import {getData,getDataNoParam} from '@services/ApiServices';
 import Constants from '@reducer-contant';
-import { setLoadingTrue, setLoadingFalse } from '@services/global';
+import { setLoadingTrue, setLoadingFalse } from '@services/Global';
 export const getDestinationList = (values) => async (dispatch) => {
     try {
        

@@ -26,7 +26,7 @@ import { Outlet,Link,Navigate  } from 'react-router-dom';
 import React from "react";
 import { styled, useTheme } from "@mui/material/styles";
 import Config from '@services/Config.json';
-import { useStateContext } from '@context/contextProvider'
+
 import AuthenticateHooks from '../pages/auth/hooks/AuthenticationHooks';
 const drawerWidth = 240;
 
@@ -98,10 +98,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 const Navigation = () => {
     const {logoutSumbit} = AuthenticateHooks()
-    const {token} = useStateContext()
-    if (!token) {
-      return <Navigate to="/login"/>
-    }
+   
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
     const [openDropdown, setOpenDropdown] = React.useState(true);

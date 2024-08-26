@@ -1,5 +1,6 @@
 import axios from "axios";
 import { fetchCsrfToken } from './csrf';
+import eventEmitter from './eventEmitter';
 // import {useStateContext} from "./context/ContextProvider.jsx";
 const SERVER_URL = import.meta.env.VITE_API_BASE_URL
 
@@ -7,6 +8,7 @@ const axiosInstance  = axios.create({
   baseURL: SERVER_URL,
 })
 
+let hasEmittedUnauthorized = false;
 
 axiosInstance.interceptors.request.use(async (config) => {
   await fetchCsrfToken();
@@ -22,9 +24,17 @@ axiosInstance.interceptors.response.use(
     const { response } = error;
 
     if (response) {
+      
       switch (response.status) {
         case 401:
-          localStorage.removeItem('ACCESS_TOKEN');
+          if (response.status === 401 && !hasEmittedUnauthorized) {
+            hasEmittedUnauthorized = true; // Set flag to true to prevent further emissions
+            localStorage.removeItem('ACCESS_TOKEN');
+            eventEmitter.emit('unauthorized');
+          } else if (response.status !== 401) {
+            // Reset flag if not 401 or handle other status codes
+            hasEmittedUnauthorized = false;
+          }
           // Redirect to login or show a login prompt
           break;
         case 404:

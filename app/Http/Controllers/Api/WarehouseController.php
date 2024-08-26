@@ -98,11 +98,25 @@ class WarehouseController extends Controller
         //
     }
 
-    public function getAllWwarehouses(){
+    public function getAllWarehouses(){
         
         return response()->json([
-            'dataListCount'=> Warehouse::all()->count(),
-            'dataList'     => Warehouse::orderBy('group','asc')->orderBy('name','asc')->get(['id','name','group']),
+            'dataListCount'=> $this->warehouse->all()->count(),
+            'dataList'     => $this->warehouse->orderBy('group','asc')->orderBy('name','asc')->get(['id','name','group']),
+        ]);
+    }
+
+
+    public function getAllWarehouseGroup(Request $request){
+
+        $group = $request->get('group');
+
+        $warehouseList =  $this->warehouse->where('group', $group);
+        
+        
+        return response()->json([
+            'dataListCount'=> $warehouseList->count(),
+            'dataList'     => $warehouseList->orderBy('group','asc')->orderBy('name','asc')->get(['id','name','group']),
         ]);
     }
 }

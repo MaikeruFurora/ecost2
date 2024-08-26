@@ -1,4 +1,4 @@
-import { Box, Stack, Grid,Card,CardContent,List,ListItem,ListItemText,IconButton, Typography, CardHeader, TableBody,Table,TableCell,TableRow,Accordion,AccordionSummary,AccordionActions,AccordionDetails, TableHead  } from '@mui/material';
+import { Box, Stack, Grid,Card,CardContent,List,ListItem,ListItemText,IconButton, Typography, TableBody,Table,TableCell,TableRow,Accordion,AccordionSummary,AccordionActions,AccordionDetails, TableHead  } from '@mui/material';
 import Input from '@component/Input'
 import Accordions from '@component/Accordion'
 import Select from '@component/Select'
@@ -55,31 +55,34 @@ const Matrix = (props) => {
                     expanded={expanded}
                     onChange={handleChange}
                   >
-                    <Grid container spacing={2}>
-                      {item.data.map((item2, ii) => (
-                        <Grid item xs={12} sm={6} md={3} key={ii}>
-                          <Table size="small" sx={{ border: 1, borderColor: 'grey.300' }}>
-                            <TableHead>
-                              <TableRow>
-                                <TableCell colSpan={2}>
-                                  <Typography variant="p" sx={{ fontSize: '12px', fontWeight: 'bold' }}>
-                                    {item2.header_name}
-                                  </Typography>
-                                </TableCell>
-                              </TableRow>
-                            </TableHead>
-                            <TableBody>
-                              {item2.destination.map((item3, iii) => (
-                                <TableRow key={iii}>
-                                  <TableCell sx={{ fontSize: 12 }}>{item3.name}</TableCell>
-                                  <TableCell sx={{ fontSize: 12 }}>{item3.rate}</TableCell>
-                                </TableRow>
-                              ))}
-                            </TableBody>
-                          </Table>
-                        </Grid>
-                      ))}
-                    </Grid>
+                  <Grid container spacing={2}>
+                    <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+                      <TableHead>
+                        <TableRow>
+                        {item.data.map((item2, ii) => (
+                            <TableCell key={`header-${ii}`} sx={{ fontSize: 11 }} align="left">
+                              {item2.header_name}
+                            </TableCell>
+                          ))}
+                        </TableRow>
+                      </TableHead>
+                        {item.data.map((item2, ii) => (
+                      <TableBody>
+                          <TableRow key={`row-${ii}`}>
+                            {item2.destination.map((item3, iii) => (
+                              <TableCell
+                                key={`cell-${ii}-${iii}`}
+                                sx={{ fontSize: 10 }}
+                                align="left"
+                              >
+                                {item3.name} ({item3.rate})
+                              </TableCell>
+                            ))}
+                          </TableRow>
+                      </TableBody>
+                        ))}
+                    </Table>
+                  </Grid>
                   </Accordions>
                 )))}
               </Grid>

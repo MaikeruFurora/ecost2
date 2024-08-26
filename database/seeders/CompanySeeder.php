@@ -18,6 +18,7 @@ class CompanySeeder extends Seeder
         return Company::insert([
             [
                 'name' => 'ARVIN - MAIN',
+                'code' => 'ARVIN',
                 'created_by' => 1,
                 'modified_by' => 1,
                 'created_at' => Carbon::now(),                
@@ -25,6 +26,7 @@ class CompanySeeder extends Seeder
             ],
             [
                 'name' => 'RH - OTHER COMPANY',
+                'code' => 'RH',
                 'created_by' => 1,
                 'modified_by' => 1,
                 'created_at' => Carbon::now(),                

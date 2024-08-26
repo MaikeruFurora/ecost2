@@ -4,15 +4,11 @@ import {
     postData
 } from '@services/ApiServices';
 import Constants from '@reducer-contant';
+import { setLoadingTrue, setLoadingFalse } from '@services/Global';
 
 export const getAllWarehouses = (values) => async (dispatch) => {
     try {
-        await dispatch({
-            type: Constants.ACTION_LOADING,
-            payload:{
-                loading:true,
-            }
-        })
+        await dispatch(setLoadingTrue())
         const res = await getDataNoParam('warehouse/get-all-warehouses');
         await dispatch({
             type: Constants.ACTION_WAREHOUSE,
@@ -25,23 +21,33 @@ export const getAllWarehouses = (values) => async (dispatch) => {
     } catch (error) {
         throw error.response.data?.message
     } finally{
+        await dispatch(setLoadingFalse());
+    }
+}
+
+
+export const getAllWarehousesBaseOnGroup = (values) => async (dispatch) => {
+    try {
+        await dispatch(setLoadingTrue())
+        const res = await getData('warehouse/get-all-warehouse-group', values);
         await dispatch({
-            type: Constants.ACTION_LOADING,
+            type: Constants.ACTION_WAREHOUSE,
             payload: {
-              loading: false,
+                dataList: res.dataList,
+                dataListCount: res.dataListCount,
             },
         });
+    
+    } catch (error) {
+        throw error.response.data?.message
+    } finally{
+        await dispatch(setLoadingFalse());
     }
 }
 
 export const getAllForms = (values) => async (dispatch) => {
     try {
-        await dispatch({
-            type: Constants.ACTION_LOADING,
-            payload:{
-                loading:true,
-            }
-        })
+        await dispatch(setLoadingTrue())
         const res = await getDataNoParam('form/get-all-forms');
         await dispatch({
             type: Constants.ACTION_FORMDOC,
@@ -54,24 +60,14 @@ export const getAllForms = (values) => async (dispatch) => {
     } catch (error) {
         throw error.response.data?.message
     } finally{
-        await dispatch({
-            type: Constants.ACTION_LOADING,
-            payload: {
-              loading: false,
-            },
-        });
+        await dispatch(setLoadingFalse());
     }
 }
 
 export const getAllTaxCodes = (values) => async (dispatch) => {
     try {
        
-        await dispatch({
-            type: Constants.ACTION_LOADING,
-            payload:{
-                loading:true,
-            }
-        })
+        await dispatch(setLoadingTrue())
         const res = await getData('taxcode/get-all-tax-codes', values);
         await dispatch({
             type: Constants.ACTION_TAXCODE,
@@ -84,23 +80,13 @@ export const getAllTaxCodes = (values) => async (dispatch) => {
     } catch (error) {
         throw error.response.data?.message
     } finally{
-        await dispatch({
-            type: Constants.ACTION_LOADING,
-            payload: {
-              loading: false,
-            },
-        });
+        await dispatch(setLoadingFalse());
     }
 }
 
 export const getAllCompanies = (values) => async (dispatch) => {
     try {
-        await dispatch({
-            type: Constants.ACTION_LOADING,
-            payload:{
-                loading:true,
-            }
-        })
+        await dispatch(setLoadingTrue())
         const res = await getDataNoParam('company/get-all-companies');
         await dispatch({
             type: Constants.ACTION_COMPANY,
@@ -113,24 +99,14 @@ export const getAllCompanies = (values) => async (dispatch) => {
     } catch (error) {
         throw error.response.data?.message
     } finally{
-        await dispatch({
-            type: Constants.ACTION_LOADING,
-            payload: {
-              loading: false,
-            },
-        });
+        await dispatch(setLoadingFalse());
     }
 }
 
 export const storeProduct = (values) => async (dispatch) => {
     
     try {
-        await dispatch({
-            type: Constants.ACTION_LOADING,
-            payload:{
-                loading:true,
-            }
-        })
+        await dispatch(setLoadingTrue())
         const res = await postData('/product', values);
         return res;
         } catch (error) {
@@ -147,12 +123,7 @@ export const storeProduct = (values) => async (dispatch) => {
 
 export const getProductList = (values) => async (dispatch) => {
     try {
-        await dispatch({
-            type: Constants.ACTION_LOADING,
-            payload:{
-                loading:true,
-            }
-        })
+        await dispatch(setLoadingTrue())
         const res = await getData('/product', values);
         await dispatch({
             type: Constants.ACTION_PRODUCT,
@@ -172,23 +143,13 @@ export const getProductList = (values) => async (dispatch) => {
     } catch (error) {
         throw error
     } finally{
-        await dispatch({
-            type: Constants.ACTION_LOADING,
-            payload: {
-              loading: false,
-            },
-        });
+        await dispatch(setLoadingFalse());
     }
 }
 
 export const getProductPriceLog = (values) => async (dispatch) => {
     try {
-        await dispatch({
-            type: Constants.ACTION_LOADING,
-            payload:{
-                loading:true,
-            }
-        })
+        await dispatch(setLoadingTrue())
         const res = await getData('/price-log', values);
         await dispatch({
             type: Constants.ACTION_PRODUCT,
@@ -208,23 +169,13 @@ export const getProductPriceLog = (values) => async (dispatch) => {
     } catch (error) {
         throw error
     } finally{
-        await dispatch({
-            type: Constants.ACTION_LOADING,
-            payload: {
-              loading: false,
-            },
-        });
+        await dispatch(setLoadingFalse());
     }
 }
 
 export const getPriceType = (values) => async (dispatch) => {
     try {
-        await dispatch({
-            type: Constants.ACTION_LOADING,
-            payload:{
-                loading:true,
-            }
-        })
+        await dispatch(setLoadingTrue())
         const res = await getDataNoParam('/product/price-type');
         await dispatch({
             type: Constants.ACTION_PRICE_TYPE,
@@ -237,11 +188,25 @@ export const getPriceType = (values) => async (dispatch) => {
     } catch (error) {
         throw error
     } finally{
+        await dispatch(setLoadingFalse());
+    }
+}
+
+
+export const getPriceList = (values) => async (dispatch) => {
+    try {
+        await dispatch(setLoadingTrue())
+        const res = await getData('/product-pricing/get-all-price-matix', values);
         await dispatch({
-            type: Constants.ACTION_LOADING,
+            type: Constants.ACTION_PRODUCT_PRICING,
             payload: {
-              loading: false,
+                dataList: res.dataList,
+                dataListCount: res.total,
             },
-        });
+        });    
+    } catch (error) {
+        throw error
+    } finally{
+        await dispatch(setLoadingFalse());
     }
 }

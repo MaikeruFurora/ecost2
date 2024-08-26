@@ -10,15 +10,13 @@ import store from './redux/store/storeConfig.js';
 import Loading from '@component/Loading.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  // <React.StrictMode>
-    <Provider store={store}>
+  <Provider store={store}>
+    <BrowserRouter>
       <ContextProvider>
         <Suspense fallback={<Loading />}>
-          <BrowserRouter>
-            <App />
-          </BrowserRouter>
+          <App />
         </Suspense>
       </ContextProvider>
-    </Provider>
-  // </React.StrictMode>
+    </BrowserRouter>
+  </Provider>
 );
